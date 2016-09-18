@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<p id="results"></p>
+<input type="text" id="name">
+<button id="ajax-request">Submit</button>
+<p id="all"></p>
+<button id="find-all">Find All</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('#ajax-request').click(function() {
+		$.ajax({
+			url: "api/create/" + $('#name').val(),
+			method: "POST",
+		}).done(function(html) {
+			console.log("done");
+			$('#results').append(html);
+		}).fail(function(jqXHR, textStatus) {
+			$('#results').append(textStatus);		
+		});
+	});
+
+	$('#find-all').click(function() {
+		$.ajax({
+			url: "api/findAll",
+			method: "GET",
+		}).done(function(html) {
+			console.log(html);
+			$('#all').append(html);
+		}).fail(function(jqXHR, textStatus) {
+			$('#all').append(textStatus);		
+		});
+	});
+});
+</script>
+</body>
+</html>
