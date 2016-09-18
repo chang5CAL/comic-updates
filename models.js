@@ -3,10 +3,11 @@ mongoose.connect("mongodb://localhost/test")
 
 var Schema = mongoose.Schema;
 
-var kittenSchema = new Schema({
-  name: String
+var ComicSiteSchema = new Schema({
+  url: String,
+  title: String
 });
 
-var Kitten = mongoose.model("Kitten", kittenSchema);
+var ComicSite = mongoose.model("ComicSite", ComicSiteSchema);
 
-module.exports.Kitten = Kitten;
+module.exports.ComicSite = ComicSite;
