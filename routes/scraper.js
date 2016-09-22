@@ -27,15 +27,12 @@ router.get('/', function(req, res, next) {
 		console.log(obj);
 		res.json(obj);
 	})*/
-/*	x('http://comicfury.com/index.php?page=1', {
+	x('http://comicfury.com/index.php?page=1', {
 		image: ['.fpcomicavatar img@src'],
 		title: ['.fpcomicdescription > a'],
 		url: ['.fpcomicdescription > a@href'],
 		archive: ['.comicactions > a:nth-child(2)@href'], // make sure to grab odd numbers (1, 3)
-		profile: x(['.comicactions > a:nth-child(1)@href'], {
-			title: "title",
-			random: ".pccontent"
-		}),
+		profile: ['.comicactions > a:nth-child(1)@href'],
 
 	})(function(err, obj) {
 		console.log(err);
@@ -43,7 +40,13 @@ router.get('/', function(req, res, next) {
 		console.log(obj);
 		var list = [];
 		res.json(obj);
-		for (var i = 0; i < obj.image.length; i++) {
+		for (var i = 0; i < obj.profile.length; i++) {
+			randomA(i, obj.profile[i]);
+		}
+		// TODO add to model and just do a seperate scan of all the models
+
+
+		/*for (var i = 0; i < obj.image.length; i++) {
 			var newObj = {};
 			for (var key in obj) {
 				newObj[key] = obj[key][i];
@@ -62,21 +65,34 @@ router.get('/', function(req, res, next) {
 				console.log(obj2);
 				res.json(obj2);
 			});
-		}
+		}*/
 		//console.log(list);
-	});*/
-	x('http://stackoverflow.com/', {
+	});
+/*	x('http://stackoverflow.com/', {
 		title: x(['a@href'], 'title'),
 	}) (function(err, obj) {
 		console.log(err);
 		console.log(obj);
 	});
-/*
+
 	x('http://stackoverflow.com/', {
 		title: x('a@href', 'title'),
 	}) (function(err, obj) {
 		console.log(obj);
 	});*/
 });
+
+function randomA(index, data) {
+	console.log("randomA called");
+	console.log(index);
+	console.log(data);
+	x(data, {
+		author: '.phead > a',
+	})(function(err, obj) {
+		console.log("randomA index: " + index + " finished");
+		console.log(obj);
+
+	});
+}
 
 module.exports = router;

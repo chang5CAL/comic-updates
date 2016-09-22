@@ -34,7 +34,7 @@
     "rxjs": "5.0.0-beta.11",
     "serve-favicon": "~2.3.0",
     "systemjs": "0.19.27",
-    "x-ray": "^2.0.2",
+    "x-ray": "^2.3.0",
     "zone.js": "^0.6.17"
   },
   "devDependencies": {
