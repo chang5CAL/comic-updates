@@ -40,4 +40,9 @@ var ComicProfile = mongoose.model("ComicProfile", ComicSchema);
 var ComicChapter = mongoose.model("ComicChapter", ComicChapterSchema);
 var Tag = mongoose.model("Tag", TagSchema)
 var Kitten = mongoose.model("Kitten", kittenSchema);
+
 module.exports.Comic = Comic;
+module.exports.ComicProfile = ComicProfile;
+module.exports.ComicChapter = CmoicChapter;
+module.exports.Tag = TagSchema;
+module.exports.Kitten = kittenSchema;
