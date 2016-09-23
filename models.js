@@ -6,7 +6,9 @@ var Schema = mongoose.Schema;
 /*TODO*/
 var ComicSchema = new Schema({
   url: {type: String, unique: true},
-  comic_title: {type: String, unique: true}
+  comic_title: {type: String, unique: true},
+  archive_url: String,
+  profile_url: String
 });
 
 /*TODO*/
