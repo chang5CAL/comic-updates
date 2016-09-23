@@ -18,7 +18,7 @@ var ComicProfileSchema = new Schema({
 });
 
 /*TODO*/
-var ComicChapter = new Schema({
+var ComicChapterSchema = new Schema({
 	comic_title: {type: String, unique: true},
 	chapter_title: String,
 	chapter: Number,
@@ -30,8 +30,14 @@ var TagSchema = new Schema({
 	comics: [Schema.Types.ObjectId]
 });
 
+var kittenSchema = new Schema({
+  name: String
+});
+
+
 var Comic = mongoose.model("Comic", ComicSchema);
 var ComicProfile = mongoose.model("ComicProfile", ComicSchema);
-var ComicChapters = mongoose.model("ComicChapters", ComicChaptersSchema);
+var ComicChapter = mongoose.model("ComicChapter", ComicChapterSchema);
 var Tag = mongoose.model("Tag", TagSchema)
-module.exports.ComicSite = ComicSite;
+var Kitten = mongoose.model("Kitten", kittenSchema);
+module.exports.Comic = Comic;
