@@ -15,8 +15,8 @@ var ComicSchema = new Schema({
 });
 
 /*TODO*/
-var ComicProfileSchema = new Schema({
-	comics_id: {type: Schema.Types.ObjectId, index: true}
+var ProfileSchema = new Schema({
+	comics_id: {type: Schema.Types.ObjectId, index: true},
 	comic_title: String,
 	genre: [String],
 	language: String,
@@ -26,16 +26,17 @@ var ComicProfileSchema = new Schema({
 });
 
 /*TODO*/
-var ComicChapterSchema = new Schema({
-	comics_id: {type: Schema.Types.ObjectId, index: true}
+var ChapterSchema = new Schema({
+	comics_id: {type: Schema.Types.ObjectId, index: true},
 	comic_title: String,
 	chapter_title: String,
 	chapter: Number,
-	chapter_url: String
+	chapter_url: {type: String, unique: true},
+	date_added: String
 });
 
-var TagSchema = new Schema({
-	tag: {type: String, unique: true},
+var GenreSchema = new Schema({
+	genre: {type: String, index: true},
 	comics: [Schema.Types.ObjectId]
 });
 
@@ -45,13 +46,13 @@ var kittenSchema = new Schema({
 
 
 var Comic = mongoose.model("Comic", ComicSchema);
-var ComicProfile = mongoose.model("ComicProfile", ComicSchema);
-var ComicChapter = mongoose.model("ComicChapter", ComicChapterSchema);
-var Tag = mongoose.model("Tag", TagSchema)
+var Profile = mongoose.model("Profile", ProfileSchema);
+var Chapter = mongoose.model("Chapter", ChapterSchema);
+var Genre = mongoose.model("Genre", GenreSchema)
 var Kitten = mongoose.model("Kitten", kittenSchema);
 
 module.exports.Comic = Comic;
-module.exports.ComicProfile = ComicProfile;
-module.exports.ComicChapter = ComicChapter;
-module.exports.Tag = TagSchema;
+module.exports.Profile = Profile;
+module.exports.Chapter = Chapter;
+module.exports.Genre = Genre;
 module.exports.Kitten = kittenSchema;

@@ -4,8 +4,7 @@ var router = express.Router();
 var Models = require('../models');
 var Xray = require('x-ray');
 var x = Xray();
-/*var Request = require('request');
-var Cheerio = require('cheerio');*/
+var moment = require('moment');
 
 /* Simple find */
 router.get('/', function(req, res, next) {
@@ -73,25 +72,30 @@ function randomA(index, data, title, id) {
 }
 
 router.get('/archive', function(req, res, next) {
+	var date = moment().format("MM/DD/YYYY");
 	x('http://inontheout.thecomicseries.com/archive/', {
 		chapter_name: ['a'],
 		chapter_url: ['a@href']
 	})(function(err, obj) {
+		console.log("start");
+		console.log(obj);
 		for (var i = 0; i < obj.chapter_name.length; i++) {
+			console.log("loop");
 			var chapter_url = obj.chapter_url[i];
 			var chapter_name = obj.chapter_name[i];
 			var chapter_arr = obj.chapter_url[i].split('/');
+			console.log(chapter_url);
 			if (typeof chapter_arr !== 'undefined' && chapter_arr.length > 1 && 
 				!isNaN(parseInt(chapter_arr[chapter_arr.length - 2]))) {
 				var chapter_number = parseInt(chapter_arr[chapter_arr.length - 2]);
 				console.log(chapter_number);
-				var profile = new Models.ComicChapter({
+				var chapter = new Models.Chapter({
 					comic_title: "http://thebloomsaga.thecomicseries.com/archive/",
 					chapter_title: chapter_name,
 					chapter: chapter_number,
 					chapter_url: chapter_url
 				});
-				profile.save(function(err, comic) {
+				chapter.save(function(err, comic) {
 					console.log(err);
 				});
 			}
