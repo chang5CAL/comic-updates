@@ -9,90 +9,97 @@ var Cheerio = require('cheerio');*/
 
 /* Simple find */
 router.get('/', function(req, res, next) {
-/*	Request({
-		uri: "http://comicfury.com/index.php?page=1"
-	}, function(error, response, body) {
-		var $ = Cheerio.load(body);
-		$('.updateboxinner').each(function(i, elem) {
-			console.log(i);
-			console.log(elem);
-			res.json(elem);
-		});
-	});
-	console.log("started");*/
-/*	x('http://comicfury.com/index.php?page=1', {
-		avatar: '.fpcomicavatar',
-	}, function(err, obj) {
-		console.log(err);
-		console.log(obj);
-		res.json(obj);
-	})*/
 	x('http://comicfury.com/index.php?page=1', {
 		image: ['.fpcomicavatar img@src'],
-		title: ['.fpcomicdescription > a'],
+		comic_title: ['.fpcomicdescription > a'],
 		url: ['.fpcomicdescription > a@href'],
-		archive: ['.comicactions > a:nth-child(2)@href'], // make sure to grab odd numbers (1, 3)
-		profile: ['.comicactions > a:nth-child(1)@href'],
-
+		archive_url: ['.comicactions > a:nth-child(2)@href'], // make sure to grab odd numbers (1, 3)
+		profile_url: ['.comicactions > a:nth-child(1)@href'],
+		current_chapter: ['.fpcomicstat:nth-child(1)@html'] // not used directly
 	})(function(err, obj) {
 		console.log(err);
 		console.log("object");
-		console.log(obj);
+		console.log(obj.current_chapter[0]);
 		var list = [];
 		res.json(obj);
-		for (var i = 0; i < obj.profile.length; i++) {
-			randomA(i, obj.profile[i]);
+		for (var i = 0; i < obj.profile_url.length; i++) {
+			var chapter = obj.current_chapter[i].replace("</b>", "").replace("<b>", "").replace("Comics: ", "");
+			var comic = new Models.Comic({
+				url: obj.url[i],
+				comic_title: obj.comic_title[i],
+				archive_url: obj.archive_url[i],
+				profile_url: obj.profile_url[i],
+				current_chapter: chapter,
+				image: obj.image[i]
+			})
+			
+			console.log(comic);
+			//randomA(i, obj.profile_url[i], obj.comic_title[i], comic._id);
 		}
-		// TODO add to model and just do a seperate scan of all the models
-
-
-		/*for (var i = 0; i < obj.image.length; i++) {
-			var newObj = {};
-			for (var key in obj) {
-				newObj[key] = obj[key][i];
-			}
-			list.push(newObj);
-		}
-		console.log("made new list");
-		for (var i = 0; i < list.length; i++) {
-			console.log("loop at " + i);
-			//console.log(list[i]);
-			x(list[i].profile, {
-				my: 'title',
-			})(function(err, obj2) {
-				//console.log(list);
-				console.log("in the call");
-				console.log(obj2);
-				res.json(obj2);
-			});
-		}*/
-		//console.log(list);
 	});
-/*	x('http://stackoverflow.com/', {
-		title: x(['a@href'], 'title'),
-	}) (function(err, obj) {
-		console.log(err);
-		console.log(obj);
-	});
-
-	x('http://stackoverflow.com/', {
-		title: x('a@href', 'title'),
-	}) (function(err, obj) {
-		console.log(obj);
-	});*/
 });
 
-function randomA(index, data) {
+function randomA(index, data, title, id) {
 	console.log("randomA called");
 	console.log(index);
 	console.log(data);
-	x(data, {
-		author: '.phead > a',
-	})(function(err, obj) {
-		console.log("randomA index: " + index + " finished");
-		console.log(obj);
 
+	x('http://comicfury.com/comicprofile.php?url=bentelbows', {
+		genre: ".authorinfo:nth-of-type(3) > span.info",
+		language: ".authorinfo:nth-of-type(2) > span.info:nth-child(2)",
+		author: ".authorname@html",
+		description: ".pccontent@html", // need to clean \n and \t
+		first_page: ".authorinfo:nth-of-type(7) > a@href"
+	})(function(err, obj) {
+		console.log(obj);
+		var list = [];
+		var description = obj.description.replace("/t", "").replace("/n", "");
+		res.json(obj);
+		for (var i = 0; i < obj.profile_url.length; i++) {
+			var profile = new Models.ComicProfile({
+				comic_id: id,
+				comic_title: title,
+				genre: obj.genre,
+				language: obj.language,
+				author: obj.author,
+				description: obj.description,
+				first_page: obj.first_page
+			});
+			profile.save(function() {
+
+			});
+		}
 	});
 }
+
+router.get('/archive', function(req, res, next) {
+	x('http://inontheout.thecomicseries.com/archive/', {
+		chapter_name: ['a'],
+		chapter_url: ['a@href']
+	})(function(err, obj) {
+		for (var i = 0; i < obj.chapter_name.length; i++) {
+			var chapter_url = obj.chapter_url[i];
+			var chapter_name = obj.chapter_name[i];
+			var chapter_arr = obj.chapter_url[i].split('/');
+			if (typeof chapter_arr !== 'undefined' && chapter_arr.length > 1 && 
+				!isNaN(parseInt(chapter_arr[chapter_arr.length - 2]))) {
+				var chapter_number = parseInt(chapter_arr[chapter_arr.length - 2]);
+				console.log(chapter_number);
+				var profile = new Models.ComicChapter({
+					comic_title: "http://thebloomsaga.thecomicseries.com/archive/",
+					chapter_title: chapter_name,
+					chapter: chapter_number,
+					chapter_url: chapter_url
+				});
+				profile.save(function(err, comic) {
+					console.log(err);
+				});
+			}
+		}
+		console.log(obj);
+		//var list = [];
+		res.json(obj);
+	});
+});
 
 module.exports = router;

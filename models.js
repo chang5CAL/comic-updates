@@ -8,18 +8,27 @@ var ComicSchema = new Schema({
   url: {type: String, unique: true},
   comic_title: {type: String, unique: true},
   archive_url: String,
-  profile_url: String
+  profile_url: String,
+  current_chapter: Number,
+  current_chapter_url: String,
+  image: String
 });
 
 /*TODO*/
 var ComicProfileSchema = new Schema({
-	comic_title: {type: String, unique: true},
-	tags: [String]
+	comics_id: {type: Schema.Types.ObjectId, index: true}
+	comic_title: String,
+	genre: [String],
+	language: String,
+	author: String,
+	description: String,
+	first_page: String
 });
 
 /*TODO*/
 var ComicChapterSchema = new Schema({
-	comic_title: {type: String, unique: true},
+	comics_id: {type: Schema.Types.ObjectId, index: true}
+	comic_title: String,
 	chapter_title: String,
 	chapter: Number,
 	chapter_url: String
@@ -43,6 +52,6 @@ var Kitten = mongoose.model("Kitten", kittenSchema);
 
 module.exports.Comic = Comic;
 module.exports.ComicProfile = ComicProfile;
-module.exports.ComicChapter = CmoicChapter;
+module.exports.ComicChapter = ComicChapter;
 module.exports.Tag = TagSchema;
 module.exports.Kitten = kittenSchema;
