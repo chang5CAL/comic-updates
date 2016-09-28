@@ -6,6 +6,9 @@ var Xray = require('x-ray');
 var x = Xray();
 var moment = require('moment');
 
+var FeedParser = require('feedparser');
+var request = require('request');
+
 /* Simple find */
 router.get('/', function(req, res, next) {
 	findComics(1);
@@ -53,13 +56,13 @@ function addComic(obj, i) {
 	comic.save(function(err, com) {
 		console.log("save comic: " +err);
 		if (!err) {
-			addProfile(obj.profile_url[i], obj.comic_title[i], com._id);
+			addProfileAndGenre(obj.profile_url[i], obj.comic_title[i], com._id);
 			addChapters(obj.archive_url[i], obj.comic_title[i], com._id);
 		}
 	});
 }
 
-function addProfile(data, title, id) {
+function addProfileAndGenre(data, title, id) {
 	console.log("add Profile called");
 
 	x(data, {
@@ -81,9 +84,19 @@ function addProfile(data, title, id) {
 				description: obj.description,
 				first_page: obj.first_page
 			});
+
+			var genre = new Models.Genre({
+				genre: obj.genre,
+				comic_id: id
+			});
 			//console.log(profile);
 			profile.save(function(err, profileObj) {
 				console.log("profile save");
+				console.log(err);
+			});
+
+			genre.save(function(err, genreObj) {
+				console.log("genre save");
 				console.log(err);
 			});
 		}
@@ -161,6 +174,37 @@ router.get('/archive', function(req, res, next) {
 		//var list = [];
 		res.json(obj);
 	});
+});
+
+router.get('/rss', function(req, res, next) {
+	var req = request('http://thebloomsaga.thecomicseries.com/rss')
+	var feedparser = new FeedParser();
+	req.on('error', function (error) {
+	  // handle any request errors
+	});
+	req.on('response', function (res) {
+		var stream = this;
+
+		if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+
+		stream.pipe(feedparser);
+	});
+
+
+	feedparser.on('error', function(error) {
+		// always handle errors
+	});
+	feedparser.on('readable', function() {
+		// This is where the action is!
+		var stream = this
+	    	, meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+	    	, item;
+
+		while (item = stream.read()) {
+			console.log(item);
+		}
+	});
+	res.json("rss")
 });
 
 module.exports = router;

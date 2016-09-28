@@ -3,7 +3,6 @@ mongoose.connect("mongodb://localhost/test")
 
 var Schema = mongoose.Schema;
 
-/*TODO*/
 var ComicSchema = new Schema({
   url: {type: String, unique: true},
   comic_title: {type: String, unique: true},
@@ -13,7 +12,6 @@ var ComicSchema = new Schema({
   image: String
 });
 
-/*TODO*/
 var ProfileSchema = new Schema({
 	comic_id: {type: Schema.Types.ObjectId, index: true},
 	comic_title: String,
@@ -24,7 +22,6 @@ var ProfileSchema = new Schema({
 	first_page: String
 });
 
-/*TODO*/
 var PageSchema = new Schema({
 	comic_id: {type: Schema.Types.ObjectId, index: true},
 	comic_title: String,
@@ -36,13 +33,12 @@ var PageSchema = new Schema({
 
 var GenreSchema = new Schema({
 	genre: {type: String, index: true},
-	comics: [Schema.Types.ObjectId]
+	comic_id: {type: Schema.Types.ObjectId, unique: true}
 });
 
 var kittenSchema = new Schema({
   name: String
 });
-
 
 var Comic = mongoose.model("Comic", ComicSchema);
 var Profile = mongoose.model("Profile", ProfileSchema);
