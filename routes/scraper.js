@@ -9,12 +9,13 @@ var moment = require('moment');
 var FeedParser = require('feedparser');
 var request = require('request');
 
-/* Simple find */
+// Scans through all pages to grab all existing URL's
 router.get('/', function(req, res, next) {
-	findComics(1);
+	findComics(1); // 1050
 	res.json("Success")
 });
 
+// Scans the first 50 page to try and find new series
 router.get('/findNew', function(req, res, next) {
 	findComics(50);
 	res.json("Success")
@@ -31,12 +32,9 @@ function findComics(max) {
 			current_chapter: ['.fpcomicstat:nth-child(1)@html'] // not used directly
 		})(function(err, obj) {
 			if (!err) {
-				//console.log(obj);
-				console.log("started comics");
 				for (var j = 0; j < obj.profile_url.length; j++) {
 					addComic(obj, j);
 				}
-				console.log("finished comics");
 			}
 		});
 	}
@@ -89,7 +87,6 @@ function addProfileAndGenre(data, title, id) {
 				genre: obj.genre,
 				comic_id: id
 			});
-			//console.log(profile);
 			profile.save(function(err, profileObj) {
 				console.log("profile save");
 				console.log(err);
@@ -110,18 +107,13 @@ function addChapters(archive_url, title, id) {
 		page_name: ['a'],
 		page_url: ['a@href']
 	})(function(err, obj) {
-		//console.log("start");
-		//console.log("add chapter to " + title + " got " + err);
 		for (var i = 0; i < obj.page_name.length; i++) {
-			//console.log("loop");
 			var page_url = obj.page_url[i];
 			var page_name = obj.page_name[i];
 			var page_arr = obj.page_url[i].split('/');
-			//console.log(page_url);
 			if (typeof page_arr !== 'undefined' && page_arr.length > 1 && 
 				!isNaN(parseInt(page_arr[page_arr.length - 2]))) {
 				var page_number = parseInt(page_arr[page_arr.length - 2]); // does if check first to prevent possible error
-				//console.log(page_number);
 				var page = new Models.Page({
 					comic_id: id,
 					comic_title: title,
@@ -130,7 +122,6 @@ function addChapters(archive_url, title, id) {
 					page_url: page_url,
 					date_added: date
 				});
-				//console.log(page);
 				page.save(function(err, pageObj) {
 					console.log("page save");
 					console.log(err);
@@ -140,71 +131,53 @@ function addChapters(archive_url, title, id) {
 	});
 }
 
-router.get('/archive', function(req, res, next) {
-	var date = moment().format("MM/DD/YYYY");
-	x('http://spaceronind.thecomicseries.com/archive/', {
-		page_name: ['a'],
-		page_url: ['a@href']
-	})(function(err, obj) {
-		console.log("start");
-		console.log(obj);
-		for (var i = 0; i < obj.page_name.length; i++) {
-			console.log("loop");
-			var page_url = obj.page_url[i];
-			var page_name = obj.page_name[i];
-			var page_arr = obj.page_url[i].split('/');
-			console.log(page_url);
-			if (typeof page_arr !== 'undefined' && page_arr.length > 1 && 
-				!isNaN(parseInt(page_arr[page_arr.length - 2]))) {
-				var page_number = parseInt(page_arr[page_arr.length - 2]);
-				console.log(page_number);
-				var page = new Models.Page({
-					comic_title: "http://spaceronind.thecomicseries.com/archive/",
-					page_title: page_name,
-					page: page_number,
-					page_url: page_url,
-					date_added: date
-				});
-				page.save(function(err, comic) {
-					console.log(err);
-				});
-			}
-		}
-		console.log(obj);
-		//var list = [];
-		res.json(obj);
-	});
+// endpoint that will check all comics and see if there has been an update
+// in the rss which will cause a re-scrapping of the site archive
+router.get('/rss', function(req, res, next) {
+    var query = Models.Comic.find(function(err, comics) {
+    	if (err) return handleError(err);
+    	for (var i = 0; i < comics.length; i++) {
+    		url = comics[i].url + 'rss/';
+    		checkRss(url, comics[i].last_checked, comics[i]);
+    	}
+    });
+
 });
 
-router.get('/rss', function(req, res, next) {
-	var req = request('http://thebloomsaga.thecomicseries.com/rss')
+// Reads the rss of the provided URL and if it has been updated
+// the site will be re-crawled and the latest date updated
+function checkRss(rss, lastCheck, comic) {
+	var req = request(rss);
 	var feedparser = new FeedParser();
-	req.on('error', function (error) {
-	  // handle any request errors
-	});
 	req.on('response', function (res) {
 		var stream = this;
-
 		if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
 		stream.pipe(feedparser);
 	});
 
-
-	feedparser.on('error', function(error) {
-		// always handle errors
-	});
 	feedparser.on('readable', function() {
-		// This is where the action is!
 		var stream = this
 	    	, meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-	    	, item;
+	    	, item
+	    	, first = false;
 
-		while (item = stream.read()) {
-			console.log(item);
+		item = stream.read()
+		var date = new Date(item.pubdate);
+		if (lastCheck < date) {
+			// update the current list of comics
+			Models.Comic.findById(comic._id, function(err, newComic) {
+				if (err) return handleError(err);
+				newComic.last_checked = new Date();
+				newComic.save(function(err, updatedComic) {
+					if (err) return handleError(err);
+				});
+			});
+			// goes through archive and add everythign in again
+			// TODO find better way, big bottle neck in runtime
+			addChapters(comic.archive_url, comic.comic_title, comic._id); 
 		}
 	});
-	res.json("rss")
-});
+}
+
 
 module.exports = router;

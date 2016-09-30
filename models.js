@@ -9,7 +9,8 @@ var ComicSchema = new Schema({
   archive_url: String,
   profile_url: String,
   current_chapter: Number,
-  image: String
+  image: String,
+  last_checked: Date
 });
 
 var ProfileSchema = new Schema({
