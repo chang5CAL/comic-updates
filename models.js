@@ -34,6 +34,7 @@ var PageSchema = new Schema({
 
 var GenreSchema = new Schema({
 	genre: {type: String, index: true},
+	comic_title: String,
 	comic_id: {type: Schema.Types.ObjectId, unique: true}
 });
 

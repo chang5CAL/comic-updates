@@ -13,8 +13,8 @@ var request = require('request');
 router.get('/', function(req, res, next) {
 	findComics(1); // 1050
 	res.json("Success")
-});
-
+})
+;
 // Scans the first 50 page to try and find new series
 router.get('/findNew', function(req, res, next) {
 	findComics(50);
@@ -85,6 +85,7 @@ function addProfileAndGenre(data, title, id) {
 
 			var genre = new Models.Genre({
 				genre: obj.genre,
+				comic_title, title,
 				comic_id: id
 			});
 			profile.save(function(err, profileObj) {

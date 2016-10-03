@@ -3,6 +3,12 @@ var router = express.Router();
 
 var Models = require('../models');
 
+var pages = [];
+var genres = {};
+
+var COMIC_PER_PAGE = 25;
+var CHAPTERS_PER_PAGE = 100;
+
 /* Simple find */
 router.get('/find/:name', function(req, res, next) {
 	// params: obtain route information such as above :name
@@ -12,6 +18,42 @@ router.get('/find/:name', function(req, res, next) {
 		if (err) return handleError(err);
 		res.json(kitten);
 	});
+});
+
+function sliceArray(list, numberPerPage, page) {
+	return list.slice(numberPerPage * (page - 1), numberPerPage * page);
+}
+
+/**/
+router.get('/chapters/:page', function(req, res, next) {
+	var page = req.params.page;
+	if (pages.length == 0) {
+		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
+			if (err) return handleError(err);
+				pages = newChapters;
+				res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
+			}
+		});
+	} else {
+		res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
+	}
+});
+
+router.get('/genre/:genre/:page' ,function(req, res, next) {
+	var genre = req.params.genre; 
+	var page = req.params.page;
+	if (typeof genres[genre] === 'undefined') {
+		Models.Genre.find({genre: req.params.genre}).sort("comic_title").exec(function(err, newGenre) {
+			genres[genre] = newGenre	
+			res.json(sliceArray(genres[genre], COMIC_PER_PAGE, page));
+		});
+	} else {
+		res.json(sliceArray(genres[genre], COMIC_PER_PAGE, page));
+	}
+});
+
+router.get("/show", function(req, res, next) {
+	res.json(list);
 });
 
 router.get('/findAll', function(req, res, next) {
