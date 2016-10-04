@@ -30,9 +30,8 @@ router.get('/chapters/:page', function(req, res, next) {
 	if (pages.length == 0) {
 		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
 			if (err) return handleError(err);
-				pages = newChapters;
-				res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
-			}
+			pages = newChapters;
+			res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
 		});
 	} else {
 		res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));

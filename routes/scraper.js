@@ -13,12 +13,12 @@ var request = require('request');
 router.get('/', function(req, res, next) {
 	findComics(1); // 1050
 	res.json("Success")
-})
-;
+});
+
 // Scans the first 50 page to try and find new series
 router.get('/findNew', function(req, res, next) {
 	findComics(50);
-	res.json("Success")
+	res.json("Success");
 });
 
 function findComics(max) {
@@ -33,14 +33,15 @@ function findComics(max) {
 		})(function(err, obj) {
 			if (!err) {
 				for (var j = 0; j < obj.profile_url.length; j++) {
-					addComic(obj, j);
+					//addComic(obj, j);
+					addProfileAndGenre(obj, j);
 				}
 			}
 		});
 	}
 }
 
-function addComic(obj, i) {
+/*function addComic(obj, i) {
 	var chapter = obj.current_chapter[i].replace("</b>", "").replace("<b>", "").replace("Comics: ", "");
 	var comic = new Models.Comic({
 		url: obj.url[i],
@@ -58,12 +59,12 @@ function addComic(obj, i) {
 			addChapters(obj.archive_url[i], obj.comic_title[i], com._id);
 		}
 	});
-}
+}*/
 
-function addProfileAndGenre(data, title, id) {
+function addProfileAndGenre(object, i) {
 	console.log("add Profile called");
-
-	x(data, {
+	var chapter = object.current_chapter[i].replace("</b>", "").replace("<b>", "").replace("Comics: ", "");
+	x(object.profile_url[i], {
 		genre: ".authorinfo:nth-of-type(3) > span.info",
 		language: ".authorinfo:nth-of-type(2) > span.info:nth-child(2)",
 		author: ".authorname@html",
@@ -73,29 +74,37 @@ function addProfileAndGenre(data, title, id) {
 		if (!err) {
 			//console.log(obj);
 			var description = obj.description.replace("/t", "").replace("/n", "");
-			var profile = new Models.Profile({
-				comic_id: id,
-				comic_title: title,
+			var comic = new Models.Comic({
+				//comic_id: id,
+				comic_title: object.comic_title[i],
 				genre: obj.genre,
 				language: obj.language,
 				author: obj.author,
 				description: obj.description,
-				first_page: obj.first_page
+				first_page: obj.first_page,
+
+				url: object.url[i],
+				comic_title: object.comic_title[i],
+				archive_url: object.archive_url[i],
+				profile_url: object.profile_url[i],
+				current_chapter: chapter,
+				image: object.image[i]
 			});
 
-			var genre = new Models.Genre({
-				genre: obj.genre,
-				comic_title, title,
-				comic_id: id
-			});
-			profile.save(function(err, profileObj) {
-				console.log("profile save");
-				console.log(err);
-			});
 
-			genre.save(function(err, genreObj) {
-				console.log("genre save");
-				console.log(err);
+			comic.save(function(err, profileObj) {
+				if (!err) {
+					var genre = new Models.Genre({
+						genre: obj.genre,
+						comic_id: profileObj._id
+					});
+					console.log("profile save");
+					genre.save(function(err, genreObj) {
+						console.log("genre save");
+						console.log(err);
+					});
+					addChapters(object.archive_url[i], object.comic_title[i], profileObj._id);
+				}
 			});
 		}
 	});
