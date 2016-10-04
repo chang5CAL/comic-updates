@@ -74,6 +74,7 @@ function addProfileAndGenre(object, i) {
 		if (!err) {
 			//console.log(obj);
 			var description = obj.description.replace("/t", "").replace("/n", "");
+			var comic_title_url = object.url.replace(" ", '-').replace("'", "");
 			var comic = new Models.Comic({
 				//comic_id: id,
 				comic_title: object.comic_title[i],
@@ -83,6 +84,7 @@ function addProfileAndGenre(object, i) {
 				description: obj.description,
 				first_page: obj.first_page,
 
+				comic_title_url: comic_title_url,
 				url: object.url[i],
 				comic_title: object.comic_title[i],
 				archive_url: object.archive_url[i],
@@ -110,6 +112,9 @@ function addProfileAndGenre(object, i) {
 	});
 }
 
+/* 
+TODO: Must update the 3 of pages that the user has available to use
+*/
 function addChapters(archive_url, title, id) {
 	console.log("add chapters called");
 	var date = moment().format("MM/DD/YYYY");

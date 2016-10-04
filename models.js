@@ -22,11 +22,12 @@ var ComicSchema = new Schema({
 	first_page: String,
 	url: {type: String, unique: true},
 	comic_title: {type: String, unique: true},
+	comic_title_url: {type: String, unique: true},
 	archive_url: String,
 	profile_url: String,
 	current_chapter: Number,
 	image: String,
-	last_checked: Date
+	last_checked: Date,
 });
 
 var PageSchema = new Schema({
