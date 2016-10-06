@@ -156,7 +156,6 @@ router.get('/rss', function(req, res, next) {
     		checkRss(url, comics[i].last_checked, comics[i]);
     	}
     });
-
 });
 
 // Reads the rss of the provided URL and if it has been updated

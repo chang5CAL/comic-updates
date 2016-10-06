@@ -7,15 +7,20 @@ var mongoose = require('mongoose');
 describe('Models', function() {
   describe('Genre', function() {
 
+  	var id = null;
+
+  	before(function() {
+  		id = mongoose.Types.ObjectId();
+  	});
 
   	after(function(done) {
+  		id = null;
   		Models.Genre.remove({}, function(err, res) {
   			done(err);
   		})
   	})
 
-    it('should be defined the same', function() {
-    	var id = mongoose.Types.ObjectId();
+    it('Saving a Genre', function(done) {
 			var genre = new Models.Genre({
 				genre: "Test",
 				comic_id: id 
@@ -29,12 +34,13 @@ describe('Models', function() {
       })
     });
 
-
-  });
-
-  describe('#indexOf1()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1,2,3].indexOf(4));
+    it('Finding a Genre', function(done) {
+			Models.Genre.find({comic_id: id}).exec(function(err, res) {
+				assert.equal(1, res.length);
+				var genre = res[0];
+				assert.equal("Test", genre.genre);
+	      done(err);
+			});
     });
   });
 });
