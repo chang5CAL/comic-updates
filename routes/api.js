@@ -20,6 +20,7 @@ router.get('/comic/:comicTitleUrl', function(req, res, next) {
 		} else {
 			res.json(result);
 		}
+		// Problem how to obtain the individual pages to the chapter?
 	})
 });
 
@@ -36,7 +37,7 @@ router.get('/chapters/:page', function(req, res, next) {
 	if (page == 0) {
 		res.json([]);
 	}
-	if (pages.length == 0) {
+	if (pages.length == 0) { 
 		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
 			if (err) return handleError(err);
 			pages = newChapters;
@@ -45,6 +46,14 @@ router.get('/chapters/:page', function(req, res, next) {
 	} else {
 		res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
 	}
+});
+
+router.get('/chapter/:comic/:page', function(req, res, next) {
+	Models.Pages.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
+		var page = req.params.page;
+		if (err) return handleError(err);
+		res.json(sliceArray(newPage, COMIC_PER_PAGE, page));
+	});
 });
 
 /*
