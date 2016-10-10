@@ -9,6 +9,11 @@ var genres = {};
 var COMIC_PER_PAGE = 25;
 var CHAPTERS_PER_PAGE = 100;
 
+
+function sliceArray(list, numberPerPage, page) {
+	return list.slice(numberPerPage * (page - 1), numberPerPage * page);
+}
+
 /*
 	Endpoint that returns the the information of the comic series that's tied
 	to the given comic title url 
@@ -23,10 +28,6 @@ router.get('/comic/:comicTitleUrl', function(req, res, next) {
 		// Problem how to obtain the individual pages to the chapter?
 	})
 });
-
-function sliceArray(list, numberPerPage, page) {
-	return list.slice(numberPerPage * (page - 1), numberPerPage * page);
-}
 
 /*
 	Endpoint that returns the latest pages added to the list. Caches the list for future
@@ -48,7 +49,7 @@ router.get('/chapters/:page', function(req, res, next) {
 	}
 });
 
-router.get('/chapter/:comic/:page', function(req, res, next) {
+router.get('/chapters/:comic/:page', function(req, res, next) {
 	Models.Pages.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
 		var page = req.params.page;
 		if (err) return handleError(err);

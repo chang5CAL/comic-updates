@@ -1,8 +1,8 @@
 "use strict";
-var Page = (function () {
-    function Page() {
+var Comic = (function () {
+    function Comic() {
     }
-    return Page;
+    return Comic;
 }());
-exports.Page = Page;
+exports.Comic = Comic;
 //# sourceMappingURL=comic.js.map

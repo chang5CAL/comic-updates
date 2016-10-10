@@ -1,4 +1,4 @@
-export class Page {
+export class Comic {
 	comic_id: number;
 	genre: string;
 	language: string;
