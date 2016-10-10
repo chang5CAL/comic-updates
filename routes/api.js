@@ -67,7 +67,7 @@ router.get('/genre/:genre/:page' ,function(req, res, next) {
 		res.json([]);
 	}
 	if (typeof genres[genre] === 'undefined') {
-		Models.Genre.find({genre: req.params.genre}).sort("comic_title").exec(function(err, newGenre) {
+		Models.Comic.find({genre: req.params.genre}).sort("comic_title").exec(function(err, newGenre) {
 			genres[genre] = newGenre	
 			res.json(sliceArray(genres[genre], COMIC_PER_PAGE, page));
 		});

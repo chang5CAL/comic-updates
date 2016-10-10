@@ -15,7 +15,7 @@ var Schema = mongoose.Schema;
 
 var ComicSchema = new Schema({
 	comic_id: {type: Schema.Types.ObjectId, index: true},
-	genre: [String],
+	genre: {type: [String], index: true},
 	language: String,
 	author: String,
 	description: String,

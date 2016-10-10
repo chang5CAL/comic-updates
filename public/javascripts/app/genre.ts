@@ -1,4 +1,4 @@
-export class Page {
+export class Genre {
 	_id: number;
 	comic_id: number;
 	comic_title: string;
