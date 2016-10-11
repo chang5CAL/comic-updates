@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/test")
+mongoose.connect("mongodb://localhost/testDb")
 
 var Schema = mongoose.Schema;
 
@@ -15,7 +15,7 @@ var Schema = mongoose.Schema;
 
 var ComicSchema = new Schema({
 	comic_id: {type: Schema.Types.ObjectId, index: true},
-	genre: {type: [String], index: true},
+	genre: [String],
 	language: String,
 	author: String,
 	description: String,

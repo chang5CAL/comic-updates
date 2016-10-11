@@ -2,7 +2,7 @@
   "name": "angular2-quickstart",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrent \"node ./bin/www\" \"npm run tsc:w\"",
+    "start": "SET NODE_ENV=dev && concurrent \"node ./bin/www\" \"npm run tsc:w\"",
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
