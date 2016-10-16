@@ -398,3 +398,15 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #0085A1;
 }
+
+.table-updates {
+  border: 1px 1px solid black;
+  font: red;
+  background: blue;
+}
+
+.header {
+  border: 1px 1px solid black;
+  font: red;
+  background: blue;
+}
