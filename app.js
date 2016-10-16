@@ -34,12 +34,24 @@ app.use('/crawler', crawler);
 app.use('/scraper', scraper);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+*/
 
+app.all('*', (req, res, next) => {
+  console.log(`[TRACE] Server 404 request: ${req.originalUrl}`);
+  if (req.originalUrl.includes('/home') || req.originalUrl.includes('/random')) {
+    console.log("called inside");
+    res.status(200).sendFile(path.join(__dirname, 'views', 'index.html'));
+  } else if (!req.originalUrl.includes('/scraper') && !req.originalUrl.includes('/scraper')) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  } 
+});
 // error handlers
 
 // development error handler

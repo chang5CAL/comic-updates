@@ -41,4 +41,5 @@ import { ComicService } from './comic.service';
   ],
   bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }
