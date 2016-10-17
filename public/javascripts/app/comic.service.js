@@ -23,11 +23,13 @@ var ComicService = (function () {
     */
     ComicService.prototype.getLatestComics = function (page) {
         if (page == null) {
-            page;
+            page = 1;
         }
         return this.http.get('/api/chapters/' + this.checkPage(page))
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) {
+            return response.json();
+        })
             .catch(this.handleError);
     };
     /*
@@ -39,7 +41,7 @@ var ComicService = (function () {
     ComicService.prototype.getGenreList = function (page, genre) {
         return this.http.get('api/genre/' + genre + '/' + this.checkPage(page))
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     /*
@@ -51,7 +53,7 @@ var ComicService = (function () {
     ComicService.prototype.getComicChapters = function (comic, page) {
         return this.http.get('api/chapters/' + comic + '/' + this.checkPage(page))
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     /*
@@ -62,7 +64,7 @@ var ComicService = (function () {
     ComicService.prototype.getComic = function (comic) {
         return this.http.get('api/comic/' + comic)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     ComicService.prototype.checkPage = function (page) {

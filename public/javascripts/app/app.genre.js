@@ -9,15 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var comic_service_1 = require('./comic.service');
 var GenreComponent = (function () {
-    function GenreComponent() {
+    function GenreComponent(comicService) {
+        this.comicService = comicService;
     }
+    GenreComponent.prototype.getLatestComics = function () {
+        var _this = this;
+        this.comicService
+            .getLatestComics(1)
+            .then(function (comics) {
+            console.log(comics);
+            _this.comics = comics;
+        });
+    };
     GenreComponent = __decorate([
         core_1.Component({
             selector: 'genre',
             templateUrl: 'javascripts/app/app.genre.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [comic_service_1.ComicService])
     ], GenreComponent);
     return GenreComponent;
 }());

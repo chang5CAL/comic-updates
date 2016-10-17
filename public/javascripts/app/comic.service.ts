@@ -18,11 +18,12 @@ export class ComicService {
 	*/
 	getLatestComics(page: number): Promise<Comic[]> {
 		if (page == null) {
-			page
+			page = 1;
 		}
 		return this.http.get('/api/chapters/' + this.checkPage(page))
 			.toPromise()
-			.then(response => response.json().data as Comic[])
+			.then(response => {
+				return response.json() as Comic[]})
 			.catch(this.handleError);
 	}
 
@@ -35,7 +36,7 @@ export class ComicService {
 	getGenreList(page: number, genre: string): Promise<Comic[]> {
 		return this.http.get('api/genre/' + genre + '/' + this.checkPage(page))
 			.toPromise()
-			.then(response => response.json().data as Comic[])
+			.then(response => response.json() as Comic[])
 			.catch(this.handleError);
 	}
 
@@ -48,7 +49,7 @@ export class ComicService {
 	getComicChapters(comic: string, page: number): Promise<Page[]> {
 		return this.http.get('api/chapters/' + comic + '/' + this.checkPage(page))
 			.toPromise()
-			.then(response => response.json().data as Page[])
+			.then(response => response.json() as Page[])
 			.catch(this.handleError);
 	}
 
@@ -60,7 +61,7 @@ export class ComicService {
 	getComic(comic: string): Promise<Comic> {
 		return this.http.get('api/comic/' + comic)
 			.toPromise()
-			.then(response => response.json().data as Comic)
+			.then(response => response.json() as Comic)
 			.catch(this.handleError);
 	}
 

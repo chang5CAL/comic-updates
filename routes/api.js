@@ -35,16 +35,21 @@ router.get('/comic/:comicTitleUrl', function(req, res, next) {
 */
 router.get('/chapters/:page', function(req, res, next) {
 	var page = req.params.page;
+	console.log("got an http request " + page);
 	if (page == 0) {
+		console.log("sending empty");
 		res.json([]);
 	}
 	if (pages.length == 0) { 
+		console.log("empty pages right now");
 		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
 			if (err) return handleError(err);
+			console.log("got something from mongo call");
 			pages = newChapters;
 			res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
 		});
 	} else {
+		console.log("already existing list");
 		res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
 	}
 });
