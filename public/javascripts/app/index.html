@@ -15,7 +15,7 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="../../stylesheets/clean-blog.min.css" rel="stylesheet">
+    <link href="../../stylesheets/clean-blog.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -69,7 +69,7 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('img/home-bg.jpg'); height:50px">
         <div class="container"> 
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -86,25 +86,35 @@
     <!-- Main Content -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                    <p></p>
+            <div class="col-lg-10 col-md-10">
                     <table class="table-updates">
                         <thead>
-                            <tr class = "header">
-                                <td width=50%>Test Input</td>
-                                <td width=20%>Test Input</td>
-                                <td width=30%>Test Input</td>
+                            <tr class="header">
+                                <td class="header title">Title</td>
+                                <td class="header author">Author</td>
+                                <td class="header date">Date</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td width=50%>Test Input</td>
-                                <td width=20%>Test Input</td>
-                                <td width=30%>Test Input</td>
+                            <tr class="inputs">
+                                <td class="inputs title">Test</td>
+                                <td class="inputs author">Test</td>
+                                <td class="inputs date">Test</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <div class="mainSidebar">
+                        <h3>Sidebar Main</h3>
+                        <div class="sidebarItems">
+                            <ul>
+                                <li>item 1</li>
+                                <li>item 2</li>
+                                <li>item 3</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Pager -->

@@ -400,13 +400,28 @@ body {
 }
 
 .table-updates {
-  border: 1px 1px solid black;
+  border: 1px solid black;
   font: red;
-  background: blue;
 }
 
 .header {
-  border: 1px 1px solid black;
+  border: 1px solid black;
   font: red;
-  background: blue;
+  background: green;
+}
+
+.title {
+  width: 65%;
+}
+
+.author {
+  width: 30%;
+}
+
+.date {
+  width: 50%;
+}
+
+.inputs {
+  border: 1px solid black;
 }
