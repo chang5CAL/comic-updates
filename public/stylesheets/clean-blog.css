@@ -398,3 +398,30 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #0085A1;
 }
+
+.table-updates {
+  border: 1px solid black;
+  font: red;
+}
+
+.header {
+  border: 1px solid black;
+  font: red;
+  background: green;
+}
+
+.title {
+  width: 65%;
+}
+
+.author {
+  width: 30%;
+}
+
+.date {
+  width: 50%;
+}
+
+.inputs {
+  border: 1px solid black;
+}
