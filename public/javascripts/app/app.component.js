@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -22,4 +23,10 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
+var AppModule = (function () {
+    function AppModule() {
+    }
+    return AppModule;
+}());
+exports.AppModule = AppModule;
 //# sourceMappingURL=app.component.js.map
