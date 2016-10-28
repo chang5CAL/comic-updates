@@ -9,15 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var comic_service_1 = require('./comic.service');
 var LatestComponent = (function () {
-    function LatestComponent() {
+    function LatestComponent(comicService) {
+        this.comicService = comicService;
     }
+    LatestComponent.prototype.getLatestComics = function () {
+        var _this = this;
+        this.comicService
+            .getLatestComics(1)
+            .then(function (comics) {
+            console.log(comics);
+            _this.comics = comics;
+        });
+    };
     LatestComponent = __decorate([
         core_1.Component({
             selector: 'latest',
             templateUrl: 'javascripts/app/app.latest.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [comic_service_1.ComicService])
     ], LatestComponent);
     return LatestComponent;
 }());
