@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent }   from './app.component';
 import { LatestComponent } from './app.latest';
 import { GenreComponent } from './app.genre';
+import { ComicComponent } from './app.comic';
 
 import { ComicService } from './comic.service';
 
@@ -26,15 +27,20 @@ import { ComicService } from './comic.service';
   			component: LatestComponent
   		},
   		{
-  			path: 'random',
+  			path: 'genre',
   			component: GenreComponent
-  		}
+  		},
+      {
+        path: 'comic',
+        component: ComicComponent
+      }
   	])
   ],
   declarations: [ 
   	AppComponent,
   	LatestComponent,
-  	GenreComponent
+  	GenreComponent,
+    ComicComponent
   ],
   providers: [
   	ComicService,

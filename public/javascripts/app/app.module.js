@@ -16,6 +16,7 @@ var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
 var app_latest_1 = require('./app.latest');
 var app_genre_1 = require('./app.genre');
+var app_comic_1 = require('./app.comic');
 var comic_service_1 = require('./comic.service');
 var AppModule = (function () {
     function AppModule() {
@@ -37,15 +38,20 @@ var AppModule = (function () {
                         component: app_latest_1.LatestComponent
                     },
                     {
-                        path: 'random',
+                        path: 'genre',
                         component: app_genre_1.GenreComponent
+                    },
+                    {
+                        path: 'comic',
+                        component: app_comic_1.ComicComponent
                     }
                 ])
             ],
             declarations: [
                 app_component_1.AppComponent,
                 app_latest_1.LatestComponent,
-                app_genre_1.GenreComponent
+                app_genre_1.GenreComponent,
+                app_comic_1.ComicComponent
             ],
             providers: [
                 comic_service_1.ComicService,
