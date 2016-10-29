@@ -24,10 +24,4 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-var AppModule = (function () {
-    function AppModule() {
-    }
-    return AppModule;
-}());
-exports.AppModule = AppModule;
 //# sourceMappingURL=app.component.js.map

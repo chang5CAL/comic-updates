@@ -1,15 +1,17 @@
-@media (min-width: 1200px)
-.container {
-    width: 1170px;
+@media (min-width: 768px) {
+	.container {
+	    width: 750px;
+	}
 }
-@media (min-width: 992px)
-.container {
-    width: 970px;
+@media (min-width: 992px) {
+	.container {
+	    width: 970px;
+	}
 }
-
-@media (min-width: 768px)
-.container {
-    width: 750px;
+@media (min-width: 1200px) {
+	.container {
+	    width: 1170px;
+	}
 }
 
 .container {
@@ -17,6 +19,16 @@
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    background-color: #cccccc;
+}
+
+.right-sidebar {
+	float: right;
+	margin-right: auto;
+	margin-left: auto;
+	width: 50px;
+	background-color: red;
+	min-height: 100%;
 }
 
 /* problem the footer isn't always at the bottom for some reason */
