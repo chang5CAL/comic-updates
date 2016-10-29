@@ -5,7 +5,7 @@ import { ComicService } from './comic.service';
   selector: 'comic',
   templateUrl: 'javascripts/app/app.genre.html'
 })
-export class GenreComponent { 
+export class ComicComponent { 
 	comics: Comic[];
 	constructor(
 		private comicService: ComicService

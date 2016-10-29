@@ -16,17 +16,12 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            templateUrl: 'javascripts/app/app.component.html'
+            templateUrl: 'javascripts/app/app.component.html',
+            styleUrls: ['javascripts/app/app.component.css']
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-var AppModule = (function () {
-    function AppModule() {
-    }
-    return AppModule;
-}());
-exports.AppModule = AppModule;
 //# sourceMappingURL=app.component.js.map

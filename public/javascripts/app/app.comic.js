@@ -9,28 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var comic_service_1 = require('./comic.service');
-var LatestComponent = (function () {
-    function LatestComponent(comicService) {
-        this.comicService = comicService;
+var ComicComponent = (function () {
+    function ComicComponent() {
     }
-    LatestComponent.prototype.getLatestComics = function () {
-        var _this = this;
-        this.comicService
-            .getLatestComics(1)
-            .then(function (comics) {
-            console.log(comics);
-            _this.comics = comics;
-        });
-    };
-    LatestComponent = __decorate([
+    ComicComponent = __decorate([
         core_1.Component({
-            selector: 'latest',
-            templateUrl: 'javascripts/app/app.latest.html'
+            selector: 'genre',
+            templateUrl: 'javascripts/app/app.comic.html'
         }), 
-        __metadata('design:paramtypes', [comic_service_1.ComicService])
-    ], LatestComponent);
-    return LatestComponent;
+        __metadata('design:paramtypes', [])
+    ], ComicComponent);
+    return ComicComponent;
 }());
-exports.LatestComponent = LatestComponent;
-//# sourceMappingURL=app.latest.js.map
+exports.ComicComponent = ComicComponent;
+//# sourceMappingURL=app.comic.js.map
