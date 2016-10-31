@@ -34,6 +34,7 @@ function findComics(max) {
 			if (!err) {
 				for (var j = 0; j < obj.profile_url.length; j++) {
 					//addComic(obj, j);
+					console.log(obj);
 					addProfileAndGenre(obj, j);
 				}
 			}
@@ -65,16 +66,21 @@ function addProfileAndGenre(object, i) {
 	console.log("add Profile called");
 	var chapter = object.current_chapter[i].replace("</b>", "").replace("<b>", "").replace("Comics: ", "");
 	x(object.profile_url[i], {
-		genre: ".authorinfo:nth-of-type(3) > span.info",
+		genre: ".authorinfo:nth-of-type(3) > span.info", // @TODO 
 		language: ".authorinfo:nth-of-type(2) > span.info:nth-child(2)",
 		author: ".authorname@html",
 		description: ".pccontent@html", // need to clean \n and \t
 		first_page: ".authorinfo:nth-of-type(7) > a@href"
 	})(function(err, obj) {
+		//console.log("error");
+		//console.log(err);
+		//console.log(obj);
 		if (!err) {
-			//console.log(obj);
+			console.log('inside');
 			var description = obj.description.replace("/t", "").replace("/n", "");
-			var comic_title_url = object.url.replace(" ", '-').replace("'", "");
+			console.log(object);
+			var comic_title_url = object.comic_title[i].replace(" ", "-").replace("'", "");
+			//var genre = obj.genre.toLowerCase();
 			var comic = new Models.Comic({
 				//comic_id: id,
 				comic_title: object.comic_title[i],
@@ -93,8 +99,11 @@ function addProfileAndGenre(object, i) {
 				image: object.image[i]
 			});
 
+			console.log("after comic");
+			console.log(comic);
 
 			comic.save(function(err, profileObj) {
+				console.log("the save function");
 				if (!err) {
 					var genre = new Models.Genre({
 						genre: obj.genre,
