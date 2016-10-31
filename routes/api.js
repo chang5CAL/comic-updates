@@ -19,7 +19,7 @@ function sliceArray(list, numberPerPage, page) {
 	to the given comic title url 
 */
 router.get('/comic/:comicTitleUrl', function(req, res, next) {
-	Models.Comic.find({comic_title_url: req.params.comicTitleUrl}).execute(function(err, result) {
+	Models.Comic.find({comic_title_url: req.params.comicTitleUrl}).exec(function(err, result) {
 		if (err) {
 			res.json({});
 		} else {
@@ -55,7 +55,7 @@ router.get('/chapters/:page', function(req, res, next) {
 });
 
 router.get('/chapters/:comic/:page', function(req, res, next) {
-	Models.Pages.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
+	Models.Page.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
 		var page = req.params.page;
 		if (err) return handleError(err);
 		res.json(sliceArray(newPage, COMIC_PER_PAGE, page));

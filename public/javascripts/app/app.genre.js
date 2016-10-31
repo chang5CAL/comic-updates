@@ -17,7 +17,7 @@ var GenreComponent = (function () {
     GenreComponent.prototype.getLatestComics = function () {
         var _this = this;
         this.comicService
-            .getLatestComics(1)
+            .getGenreList(1, "Fantasy") //Get it to accept different numbers eventually. Also, check if the genre is case sensitive
             .then(function (comics) {
             console.log(comics);
             _this.comics = comics;

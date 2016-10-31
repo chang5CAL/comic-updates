@@ -76,11 +76,9 @@ function addProfileAndGenre(object, i) {
 		//console.log(err);
 		//console.log(obj);
 		if (!err) {
-			console.log('inside');
 			var description = obj.description.replace("/t", "").replace("/n", "");
 			console.log(object);
 			var comic_title_url = object.comic_title[i].replace(" ", "-").replace("'", "");
-			//var genre = obj.genre.toLowerCase();
 			var comic = new Models.Comic({
 				//comic_id: id,
 				comic_title: object.comic_title[i],
@@ -98,13 +96,10 @@ function addProfileAndGenre(object, i) {
 				current_chapter: chapter,
 				image: object.image[i]
 			});
-
-			console.log("after comic");
-			console.log(comic);
-
 			comic.save(function(err, profileObj) {
-				console.log("the save function");
+
 				if (!err) {
+					console.log("No Error");
 					var genre = new Models.Genre({
 						genre: obj.genre,
 						comic_id: profileObj._id
@@ -114,7 +109,9 @@ function addProfileAndGenre(object, i) {
 						console.log("genre save");
 						console.log(err);
 					});
+					console.log("Adding chapter");
 					addChapters(object.archive_url[i], object.comic_title[i], profileObj._id);
+					console.log("Chapter added");
 				}
 			});
 		}
