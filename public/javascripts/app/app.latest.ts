@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Comic } from './comic';
 import { ComicService } from './comic.service';
 
@@ -6,18 +7,26 @@ import { ComicService } from './comic.service';
   selector: 'latest',
   templateUrl: 'javascripts/app/app.latest.html'
 })
-export class LatestComponent { 
-	comics: Comic[];
+export class LatestComponent implements OnInit { 
+	pages: Page[];
 	constructor(
-		private comicService: ComicService
+		private comicService: ComicService,
+		private route: ActivatedRoute
 	) {}
 
-	getLatestComics(): void {
+	ngOnInit(): void {
+		this.route.params.forEach((params: Params) => {
+			let page = +params['page'];
+			this.getLatestComics(page);
+		});
+	}
+
+	getLatestComics(page: number): void {
 		this.comicService
-			.getLatestComics(1)
-			.then(comics => {
-				console.log(comics);
-				this.comics = comics;
+			.getLatestComics(page)
+			.then(pages => {
+				console.log(pages);
+				this.pages = pages;
 			});
 	}
 }

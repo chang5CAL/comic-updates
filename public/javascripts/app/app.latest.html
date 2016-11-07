@@ -1,2 +1,9 @@
 <p>Latest</p>
 <button (click)="getLatestComics();">Add</button>
+test
+<table>
+	<tr *ngFor="let page of pages">
+		<td><a routerLink="/comic/{{page.comic_title}}" routerLinkActive="active">{{page.comic_title}}</a></td>
+		<td><a href="{{page.page_url}}">{{page.page_title}}</a></td>
+	</tr>
+</table>

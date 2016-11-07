@@ -34,6 +34,7 @@ var PageSchema = new Schema({
 	comic_id: {type: Schema.Types.ObjectId, index: true},
 	comic_title: String,
 	page_title: String,
+	page_title_url: String,
 	page: Number,
 	page_url: {type: String, unique: true},
 	date_added: String

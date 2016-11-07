@@ -16,14 +16,14 @@ export class ComicService {
 	 * Returns an empty list on invalid input.
 	 * @param page: the page number that the user is currently on
 	*/
-	getLatestComics(page: number): Promise<Comic[]> {
+	getLatestComics(page: number): Promise<Page[]> {
 		if (page == null) {
 			page = 1;
 		}
 		return this.http.get('/api/chapters/' + this.checkPage(page))
 			.toPromise()
 			.then(response => {
-				return response.json() as Comic[]})
+				return response.json() as Page[]})
 			.catch(this.handleError);
 	}
 

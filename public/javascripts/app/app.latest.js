@@ -9,18 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var comic_service_1 = require('./comic.service');
 var LatestComponent = (function () {
-    function LatestComponent(comicService) {
+    function LatestComponent(comicService, route) {
         this.comicService = comicService;
+        this.route = route;
     }
-    LatestComponent.prototype.getLatestComics = function () {
+    LatestComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.forEach(function (params) {
+            var page = +params['page'];
+            _this.getLatestComics(page);
+        });
+    };
+    LatestComponent.prototype.getLatestComics = function (page) {
         var _this = this;
         this.comicService
-            .getLatestComics(1)
-            .then(function (comics) {
-            console.log(comics);
-            _this.comics = comics;
+            .getLatestComics(page)
+            .then(function (pages) {
+            console.log(pages);
+            _this.pages = pages;
         });
     };
     LatestComponent = __decorate([
@@ -28,7 +37,7 @@ var LatestComponent = (function () {
             selector: 'latest',
             templateUrl: 'javascripts/app/app.latest.html'
         }), 
-        __metadata('design:paramtypes', [comic_service_1.ComicService])
+        __metadata('design:paramtypes', [comic_service_1.ComicService, router_1.ActivatedRoute])
     ], LatestComponent);
     return LatestComponent;
 }());

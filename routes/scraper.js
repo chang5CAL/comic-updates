@@ -110,7 +110,7 @@ function addProfileAndGenre(object, i) {
 						console.log(err);
 					});
 					console.log("Adding chapter");
-					addChapters(object.archive_url[i], object.comic_title[i], profileObj._id);
+					addChapters(object.archive_url[i], object.comic_title[i], profileObj.comic_title_url, profileObj._id);
 					console.log("Chapter added");
 				}
 			});
@@ -121,7 +121,7 @@ function addProfileAndGenre(object, i) {
 /* 
 TODO: Must update the 3 of pages that the user has available to use
 */
-function addChapters(archive_url, title, id) {
+function addChapters(archive_url, title, title_url id) {
 	console.log("add chapters called");
 	var date = moment().format("MM/DD/YYYY");
 	x(archive_url, {
@@ -138,6 +138,7 @@ function addChapters(archive_url, title, id) {
 				var page = new Models.Page({
 					comic_id: id,
 					comic_title: title,
+					comic_title_url: title_url,
 					page_title: page_name,
 					page: page_number,
 					page_url: page_url,
@@ -194,7 +195,8 @@ function checkRss(rss, lastCheck, comic) {
 			});
 			// goes through archive and add everythign in again
 			// TODO find better way, big bottle neck in runtime
-			addChapters(comic.archive_url, comic.comic_title, comic._id); 
+			var title_url = comic.comic_title.replace(" ", "-").replace("'", "");
+			addChapters(comic.archive_url, comic.comic_title, title_url, comic._id); 
 		}
 	});
 }
