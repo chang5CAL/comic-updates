@@ -28,8 +28,8 @@ export class ComicService {
 			.catch(this.handleError);
 	}
 
-	getTotalPages(): Promise<number> {
-		return.this.http.get('/api/chapters/pageNumber')
+	getNumPages(): Promise<number> {
+		return this.http.get('/api/chapters/pageNumber')
 			.toPromise()
 			.then(response => {
 				return response.json() as number

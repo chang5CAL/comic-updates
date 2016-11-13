@@ -12,6 +12,7 @@ import { ComicService } from './comic.service';
 })
 export class LatestComponent implements OnInit { 
 	pages: Page[];
+	numPage: number;
 
 	constructor(
 		private comicService: ComicService,
@@ -22,6 +23,7 @@ export class LatestComponent implements OnInit {
 		this.route.params.forEach((params: Params) => {
 			let page = +params['page'];
 			this.getLatestComics(page);
+			this.getNumPages();
 		});
 	}
 
@@ -33,4 +35,14 @@ export class LatestComponent implements OnInit {
 				this.pages = pages;
 			});
 	}
+
+	getNumPages(): void {
+		this.comicService
+			.getNumPages()
+			.then(numPage => {
+				console.log(numPage);
+				this.numPage = numPage;
+			})
+	}
+
 }
