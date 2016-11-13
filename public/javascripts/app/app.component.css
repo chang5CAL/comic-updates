@@ -30,14 +30,9 @@
 	background-color: 
 }
 
-/*.right-sidebar {
-	float: right;
-	margin-right: auto;
-	margin-left: auto;
-	width: 50px;
-	background-color: red;
-	min-height: 100%;
-}*/
+.right-sidebar {
+
+}
 
 .footer {
     position: relative;
