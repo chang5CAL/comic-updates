@@ -23,26 +23,26 @@ export class LatestComponent implements OnInit {
 		this.route.params.forEach((params: Params) => {
 			let page = +params['page'];
 			this.getLatestComics(page);
-			this.getNumPages();
 		});
 	}
 
 	getLatestComics(page: number): void {
 		this.comicService
 			.getLatestComics(page)
-			.then(pages => {
-				console.log(pages);
-				this.pages = pages;
+			.then(tuple => {
+				console.log(tuple);
+				this.pages = tuple[0];
+				this.numPage = tuple[1];
 			});
 	}
 
-	getNumPages(): void {
+/*	getNumPages(): void {
 		this.comicService
 			.getNumPages()
 			.then(numPage => {
 				console.log(numPage);
 				this.numPage = numPage;
-			})
+			});
 	}
-
+*/
 }

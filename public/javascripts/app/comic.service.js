@@ -28,18 +28,20 @@ var ComicService = (function () {
         return this.http.get('/api/chapters/' + this.checkPage(page))
             .toPromise()
             .then(function (response) {
-            return response.json();
+            var res = response.json();
+            var list = [res.list, res.numPages];
+            return list;
         })
             .catch(this.handleError);
     };
-    ComicService.prototype.getTotalPages = function () {
-        return .this.http.get('/api/chapters/pageNumber')
-            .toPromise()
-            .then(function (response) {
-            return response.json();
-        })
-            .catch(this.handleError);
-    };
+    /*	getNumPages(): Promise<number> {
+            return this.http.get('/api/chapters/pageNumber')
+                .toPromise()
+                .then(response => {
+                    return response.json().numPage as number
+                })
+                .catch(this.handleError);
+        }*/
     /*
      * Makes a get request to the server to return a list of comics in a page of a genre
      * Returns an empty list on invalid input.

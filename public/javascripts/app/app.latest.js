@@ -27,9 +27,10 @@ var LatestComponent = (function () {
         var _this = this;
         this.comicService
             .getLatestComics(page)
-            .then(function (pages) {
-            console.log(pages);
-            _this.pages = pages;
+            .then(function (tuple) {
+            console.log(tuple);
+            _this.pages = tuple[0];
+            _this.numPage = tuple[1];
         });
     };
     LatestComponent = __decorate([

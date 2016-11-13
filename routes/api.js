@@ -29,6 +29,17 @@ router.get('/comic/:comicTitleUrl', function(req, res, next) {
 	})
 });
 
+router.get('/chapters/pageNumber', function(req, res, next) {
+	if (pages == null || pages.length == 0) {
+		console.log("empty page number");
+		res.json({ numPage: 0});
+	} else {
+		console.log("send page number");
+		var numPages = (pages.length / CHAPTERS_PER_PAGE)
+		res.json( {numPage: numPages} );
+	}
+});
+
 /*
 	Endpoint that returns the latest pages added to the list. Caches the list for future
 	uses. Must be re-cached when the user decides to re-scrape
@@ -42,25 +53,27 @@ router.get('/chapters/:page', function(req, res, next) {
 	}
 	if (pages == null || pages.length == 0) { 
 		console.log("empty pages right now");
-		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
+		Models.Page.find().sort({$natural: -1}).exec(function(err, newPages) {
 			if (err) return handleError(err);
 			console.log("got something from mongo call");
-			pages = newChapters;
-			res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
+			var numPages = Math.ceil((newPages.length / CHAPTERS_PER_PAGE))
+			obj = {
+				list: sliceArray(newPages, CHAPTERS_PER_PAGE, page),
+				numPages: numPages
+			}
+			res.json(obj);
 		});
 	} else {
+		var numPages = Math.ceil((pages.length / CHAPTERS_PER_PAGE))
 		console.log("already existing list");
-		res.json(sliceArray(pages, CHAPTERS_PER_PAGE, page));
+		obj = {
+			list: sliceArray(pages, CHAPTERS_PER_PAGE, page),
+			numPages: numPages
+		}
+		res.json(obj);
 	}
 });
 
-router.get('/chapters/pageNumber', function(req, res, next) {
-	if (pages == null || pages.length == 0) {
-		res.json(0);
-	} else {
-		res.json(pages.length / CHAPTERS_PER_PAGE);
-	}
-});
 
 /*
 	Endpoint that returns all pages relevent to a comic

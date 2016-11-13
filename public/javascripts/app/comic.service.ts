@@ -16,26 +16,28 @@ export class ComicService {
 	 * Returns an empty list on invalid input.
 	 * @param page: the page number that the user is currently on
 	*/
-	getLatestComics(page: number): Promise<Page[]> {
+	getLatestComics(page: number): Promise<[Page[], number]> {
 		if (page == null) {
 			page = 1;
 		}
 		return this.http.get('/api/chapters/' + this.checkPage(page))
 			.toPromise()
 			.then(response => {
-				return response.json() as Page[]
+				var res = response.json();
+				var list = [res.list, res.numPages];
+				return list as [Page[], number]
 			})
 			.catch(this.handleError);
 	}
 
-	getNumPages(): Promise<number> {
+/*	getNumPages(): Promise<number> {
 		return this.http.get('/api/chapters/pageNumber')
 			.toPromise()
 			.then(response => {
-				return response.json() as number
+				return response.json().numPage as number
 			})
 			.catch(this.handleError);
-	}
+	}*/
 
 	/*
 	 * Makes a get request to the server to return a list of comics in a page of a genre
