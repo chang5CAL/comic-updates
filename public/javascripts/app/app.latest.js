@@ -19,8 +19,8 @@ var LatestComponent = (function () {
     LatestComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.forEach(function (params) {
-            var page = +params['page'];
-            _this.getLatestComics(page);
+            _this.currentPage = +params['page'];
+            _this.getLatestComics(_this.currentPage);
         });
     };
     LatestComponent.prototype.getLatestComics = function (page) {

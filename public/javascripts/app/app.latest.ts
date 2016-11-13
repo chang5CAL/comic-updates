@@ -13,6 +13,7 @@ import { ComicService } from './comic.service';
 export class LatestComponent implements OnInit { 
 	pages: Page[];
 	numPage: number;
+	currentPage: number;
 
 	constructor(
 		private comicService: ComicService,
@@ -21,8 +22,8 @@ export class LatestComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.params.forEach((params: Params) => {
-			let page = +params['page'];
-			this.getLatestComics(page);
+			this.currentPage = +params['page'];
+			this.getLatestComics(this.currentPage);
 		});
 	}
 
@@ -35,14 +36,4 @@ export class LatestComponent implements OnInit {
 				this.numPage = tuple[1];
 			});
 	}
-
-/*	getNumPages(): void {
-		this.comicService
-			.getNumPages()
-			.then(numPage => {
-				console.log(numPage);
-				this.numPage = numPage;
-			});
-	}
-*/
 }
