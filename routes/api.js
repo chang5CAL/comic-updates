@@ -40,7 +40,7 @@ router.get('/chapters/:page', function(req, res, next) {
 		console.log("sending empty");
 		res.json([]);
 	}
-	if (pages.length == 0) { 
+	if (pages == null || pages.length == 0) { 
 		console.log("empty pages right now");
 		Models.Page.find().sort({$natural: -1}).exec(function(err, newChapters) {
 			if (err) return handleError(err);
@@ -54,6 +54,17 @@ router.get('/chapters/:page', function(req, res, next) {
 	}
 });
 
+router.get('/chapters/pageNumber', function(req, res, next) {
+	if (pages == null || pages.length == 0) {
+		res.json(0);
+	} else {
+		res.json(pages.length / CHAPTERS_PER_PAGE);
+	}
+});
+
+/*
+	Endpoint that returns all pages relevent to a comic
+*/
 router.get('/chapters/:comic/:page', function(req, res, next) {
 	Models.Page.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
 		var page = req.params.page;

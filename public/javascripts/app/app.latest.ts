@@ -5,7 +5,10 @@ import { ComicService } from './comic.service';
 
 @Component({
   selector: 'latest',
-  templateUrl: 'javascripts/app/app.latest.html'
+  templateUrl: 'javascripts/app/app.latest.html',
+  styleUrls: [
+  	'javascripts/app/app.latest.css'
+  ]
 })
 export class LatestComponent implements OnInit { 
 	pages: Page[];

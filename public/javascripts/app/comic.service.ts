@@ -23,7 +23,17 @@ export class ComicService {
 		return this.http.get('/api/chapters/' + this.checkPage(page))
 			.toPromise()
 			.then(response => {
-				return response.json() as Page[]})
+				return response.json() as Page[]
+			})
+			.catch(this.handleError);
+	}
+
+	getTotalPages(): Promise<number> {
+		return.this.http.get('/api/chapters/pageNumber')
+			.toPromise()
+			.then(response => {
+				return response.json() as number
+			})
 			.catch(this.handleError);
 	}
 

@@ -1,4 +1,18 @@
-.first-table-cell {
+thead {
 	border-radius: 50px 50px 0px 0px;
 	background-color: #2C3E50;
+	color: white;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	padding: 5px;
+	width: 50%;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f8;
 }

@@ -35,7 +35,10 @@ var LatestComponent = (function () {
     LatestComponent = __decorate([
         core_1.Component({
             selector: 'latest',
-            templateUrl: 'javascripts/app/app.latest.html'
+            templateUrl: 'javascripts/app/app.latest.html',
+            styleUrls: [
+                'javascripts/app/app.latest.css'
+            ]
         }), 
         __metadata('design:paramtypes', [comic_service_1.ComicService, router_1.ActivatedRoute])
     ], LatestComponent);

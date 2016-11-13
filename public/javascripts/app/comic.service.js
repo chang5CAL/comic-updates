@@ -32,6 +32,14 @@ var ComicService = (function () {
         })
             .catch(this.handleError);
     };
+    ComicService.prototype.getTotalPages = function () {
+        return .this.http.get('/api/chapters/pageNumber')
+            .toPromise()
+            .then(function (response) {
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
     /*
      * Makes a get request to the server to return a list of comics in a page of a genre
      * Returns an empty list on invalid input.
