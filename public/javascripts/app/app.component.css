@@ -14,26 +14,34 @@
 	}
 }
 
+.header {
+	background-color: rgba(0,0,0,.66)
+}
+
+/* For alignment purposes*/
 .container {
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    background-color: #cccccc;
 }
 
-.right-sidebar {
+.content {
+	background-color: 
+}
+
+/*.right-sidebar {
 	float: right;
 	margin-right: auto;
 	margin-left: auto;
 	width: 50px;
 	background-color: red;
 	min-height: 100%;
-}
+}*/
 
-/* problem the footer isn't always at the bottom for some reason */
 .footer {
-    position: absolute;
+    position: relative;
+    clear: both
     bottom: 0;
     width: 100%;
     height: 60px;

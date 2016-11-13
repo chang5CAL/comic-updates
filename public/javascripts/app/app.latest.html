@@ -2,8 +2,12 @@
 <button (click)="getLatestComics();">Add</button>
 test
 <table>
+	<tr class="first-table-cell">
+		<td>first cell</td>
+		<td>second scell</td>
+	</tr>
 	<tr *ngFor="let page of pages">
-		<td><a routerLink="/comic/{{page.comic_title}}" routerLinkActive="active">{{page.comic_title}}</a></td>
+		<td style="padding-right: 10px;"><a routerLink="/comic/{{page.comic_title_url}}" routerLinkActive="active">{{page.comic_title}}</a></td>
 		<td><a href="{{page.page_url}}">{{page.page_title}}</a></td>
 	</tr>
 </table>

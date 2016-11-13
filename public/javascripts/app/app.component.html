@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default header">
 
   <div class="container-fluid container">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,29 +23,18 @@
 </nav>
 
 <div class="container">
-	<h1>My First Angular 2 App</h1>
-	<nav>
-	  <a routerLink="/home/1" routerLinkActive="active">Dashboard</a>
-	  <a routerLink="/genre" routerLinkActive="active">Genre</a>
-	  <a routerLink="/comic" routerLinkActive="active">Comic</a>
-	</nav>
-
-	<router-outlet></router-outlet> 
-
-	<div class="header">
-		Comic Updates
-		<button>Login</button>
-		<button>Register</button>
+	<div class="row">
+		<div class="col-md-9">
+			<h1>My First Angular 2 App</h1>
+			<nav>
+			  <a routerLink="/home/1" routerLinkActive="active">Dashboard</a>
+			  <a routerLink="/genre" routerLinkActive="active">Genre</a>
+			  <a routerLink="/comic" routerLinkActive="active">Comic</a>
+			</nav>
+			<router-outlet></router-outlet> 
+		</div>
+		<div class="right-sidebar col-md-3">sidebar</div>
 	</div>
-	<div class="body">
-		<table>
-			<tr>
-			<td>
-			</td>
-			</tr>
-		</table>
-	</div>
-<div class="right-sidebar">sidebar</div>
 </div>
 
 <footer class="footer">

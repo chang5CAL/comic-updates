@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Comic } from './comic';
+import { Page } from './page';
 import { ComicService } from './comic.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { ComicService } from './comic.service';
 })
 export class LatestComponent implements OnInit { 
 	pages: Page[];
+
 	constructor(
 		private comicService: ComicService,
 		private route: ActivatedRoute

@@ -121,7 +121,7 @@ function addProfileAndGenre(object, i) {
 /* 
 TODO: Must update the 3 of pages that the user has available to use
 */
-function addChapters(archive_url, title, title_url id) {
+function addChapters(archive_url, title, title_url, id) {
 	console.log("add chapters called");
 	var date = moment().format("MM/DD/YYYY");
 	x(archive_url, {
