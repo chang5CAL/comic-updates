@@ -22,9 +22,7 @@ var ComicService = (function () {
      * @param page: the page number that the user is currently on
     */
     ComicService.prototype.getLatestComics = function (page) {
-        if (page == null) {
-            page = 1;
-        }
+        page = page || 1;
         return this.http.get('/api/chapters/' + this.checkPage(page))
             .toPromise()
             .then(function (response) {

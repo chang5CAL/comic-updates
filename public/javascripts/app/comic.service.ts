@@ -17,9 +17,7 @@ export class ComicService {
 	 * @param page: the page number that the user is currently on
 	*/
 	getLatestComics(page: number): Promise<[Page[], number]> {
-		if (page == null) {
-			page = 1;
-		}
+		page = page || 1;
 		return this.http.get('/api/chapters/' + this.checkPage(page))
 			.toPromise()
 			.then(response => {

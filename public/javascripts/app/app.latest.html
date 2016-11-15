@@ -17,11 +17,9 @@ test
 </table>
 
 <ul class="pagination">
-  <li *ngIf="currentPage != 1"><a href="#">← </a></li>
-  <li><a href="#">1</a></li>
-  <li class="active"><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li *ngIf="currentPage != numPage"><a href="#"> →</a></li>
-</ul>
+  <li *ngIf="currentPage != 1"><a routerLink="/home/{{currentPage - 1}}" routerLinkActive="active">← </a></li>
+  <li *ngFor="let displayPage of displayPages" ngClass="{{showActiveStyle(displayPage)}}">
+  	<a routerLink="/home/{{displayPage}}">{{displayPage}}</a>
+  </li>
+  <li *ngIf="currentPage != numPage"><a routerLink="/home/{{currentPage + 1}}" routerLinkActive="active"> →</a></li>
+</ul> 

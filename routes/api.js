@@ -56,7 +56,7 @@ router.get('/chapters/:page', function(req, res, next) {
 		Models.Page.find().sort({$natural: -1}).exec(function(err, newPages) {
 			if (err) return handleError(err);
 			console.log("got something from mongo call");
-			var numPages = Math.ceil((newPages.length / CHAPTERS_PER_PAGE))
+			var numPages = Math.ceil((newPages.length / CHAPTERS_PER_PAGE));
 			obj = {
 				list: sliceArray(newPages, CHAPTERS_PER_PAGE, page),
 				numPages: numPages
@@ -73,7 +73,6 @@ router.get('/chapters/:page', function(req, res, next) {
 		res.json(obj);
 	}
 });
-
 
 /*
 	Endpoint that returns all pages relevent to a comic
@@ -105,6 +104,5 @@ router.get('/genre/:genre/:page' ,function(req, res, next) {
 		res.json(sliceArray(genres[genre], COMIC_PER_PAGE, page));
 	}
 });
-
 
 module.exports = router;
