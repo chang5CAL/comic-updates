@@ -61,7 +61,11 @@ var ComicService = (function () {
     ComicService.prototype.getComicChapters = function (comic, page) {
         return this.http.get('api/chapters/' + comic + '/' + this.checkPage(page))
             .toPromise()
-            .then(function (response) { return response.json(); })
+            .then(function (response) {
+            var res = response.json();
+            var list = [res.list, res.numPages];
+            return list;
+        })
             .catch(this.handleError);
     };
     /*

@@ -9,23 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var comic_service_1 = require('./comic.service');
 var ComicComponent = (function () {
-    function ComicComponent(comicService) {
+    function ComicComponent(comicService, route) {
         this.comicService = comicService;
+        this.route = route;
     }
-    ComicComponent.prototype.getLatestComics = function () {
+    ComicComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.forEach(function (params) {
+            _this.currentComic = params['comic'];
+            /* the + converts string to a number type */
+            _this.currentPage = +params['page'] || 1;
+            _this.getComic(_this.currentComic);
+        });
+    };
+    ComicComponent.prototype.getComic = function (currentComic) {
         var _this = this;
         this.comicService
-            .getComic("Ascendria")
+            .getComic(currentComic)
             .then(function (comic) {
             console.log(comic);
             _this.comic = comic;
             _this.comicService
-                .getComicChapters("Ascendria", 1)
-                .then(function (pages) {
-                console.log(pages);
-                _this.pages = pages;
+                .getComicChapters(comic.comic_title_url, _this.currentPage)
+                .then(function (tuple) {
+                console.log(tuple);
+                _this.pages = tuple[0];
+                _this.numPages = tuple[1];
             });
         });
     };
@@ -34,7 +46,7 @@ var ComicComponent = (function () {
             selector: 'comic',
             templateUrl: 'javascripts/app/app.comic.html'
         }), 
-        __metadata('design:paramtypes', [comic_service_1.ComicService])
+        __metadata('design:paramtypes', [comic_service_1.ComicService, router_1.ActivatedRoute])
     ], ComicComponent);
     return ComicComponent;
 }());

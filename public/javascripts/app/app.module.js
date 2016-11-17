@@ -42,7 +42,7 @@ var AppModule = (function () {
                         component: app_genre_1.GenreComponent
                     },
                     {
-                        path: 'comic',
+                        path: 'comic/:comic/:page',
                         component: app_comic_1.ComicComponent
                     }
                 ])

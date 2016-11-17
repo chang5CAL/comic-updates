@@ -20,16 +20,16 @@ function sliceArray(list, numberPerPage, page) {
 */
 router.get('/comic/:comicTitleUrl', function(req, res, next) {
 	Models.Comic.find({comic_title_url: req.params.comicTitleUrl}).exec(function(err, result) {
-		if (err) {
+		if (err || result.length == 0) {
 			res.json({});
 		} else {
-			res.json(result);
+			res.json(result[0]);
 		}
 		// Problem how to obtain the individual pages to the chapter?
 	})
 });
 
-router.get('/chapters/pageNumber', function(req, res, next) {
+/*router.get('/chapters/pageNumber', function(req, res, next) {
 	if (pages == null || pages.length == 0) {
 		console.log("empty page number");
 		res.json({ numPage: 0});
@@ -39,7 +39,7 @@ router.get('/chapters/pageNumber', function(req, res, next) {
 		res.json( {numPage: numPages} );
 	}
 });
-
+*/
 /*
 	Endpoint that returns the latest pages added to the list. Caches the list for future
 	uses. Must be re-cached when the user decides to re-scrape
@@ -78,10 +78,15 @@ router.get('/chapters/:page', function(req, res, next) {
 	Endpoint that returns all pages relevent to a comic
 */
 router.get('/chapters/:comic/:page', function(req, res, next) {
-	Models.Page.find({"comic_title": req.params.comic}).sort("page").exec(function(err, newPage) {
+	Models.Page.find({"comic_title_url": req.params.comic}).sort("page").exec(function(err, newPage) {
 		var page = req.params.page;
 		if (err) return handleError(err);
-		res.json(sliceArray(newPage, COMIC_PER_PAGE, page));
+		var numPages = Math.ceil(newPage.length / COMIC_PER_PAGE);
+		obj = {
+			list: sliceArray(newPage, COMIC_PER_PAGE, page),
+			numPages: numPages
+		}
+		res.json(obj);
 	});
 });
 
@@ -89,7 +94,7 @@ router.get('/chapters/:comic/:page', function(req, res, next) {
 	Endpoint that returns comics within a certain genre sorted in alphabetical order. Caches the list for future
 	uses. Must be re-cached when the user decides to re-scrape
 */
-router.get('/genre/:genre/:page' ,function(req, res, next) {
+router.get('/genre/:genre/:page', function(req, res, next) {
 	var genre = req.params.genre; 
 	var page = req.params.page;
 	if (page == 0) {

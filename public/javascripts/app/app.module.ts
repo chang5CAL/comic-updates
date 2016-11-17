@@ -31,7 +31,7 @@ import { ComicService } from './comic.service';
   			component: GenreComponent
   		},
       {
-        path: 'comic',
+        path: 'comic/:comic/:page',
         component: ComicComponent
       }
   	])

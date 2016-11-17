@@ -56,10 +56,14 @@ export class ComicService {
 	 * @param comic: the comic that the user is looking at
 	 * @param page: the page number that the user is currently on
 	*/
-	getComicChapters(comic: string, page: number): Promise<Page[]> {
+	getComicChapters(comic: string, page: number): Promise<[Page[], number]> {
 		return this.http.get('api/chapters/' + comic + '/' + this.checkPage(page))
 			.toPromise()
-			.then(response => response.json() as Page[])
+			.then(response => {
+				var res = response.json();
+				var list = [res.list, res.numPages];
+				return list as [Page[], number]
+			})
 			.catch(this.handleError);
 	}
 

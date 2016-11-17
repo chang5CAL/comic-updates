@@ -1,6 +1,11 @@
-<p>Latest</p>
-<button (click)="getLatestComics();">Add</button>
-test
+<ul class="pagination">
+  <li *ngIf="currentPage != 1"><a routerLink="/home/{{currentPage - 1}}" routerLinkActive="active">← </a></li>
+  <li *ngFor="let displayPage of displayPages" ngClass="{{showActiveStyle(displayPage)}}">
+  	<a routerLink="/home/{{displayPage}}">{{displayPage}}</a>
+  </li>
+  <li *ngIf="currentPage != numPage"><a routerLink="/home/{{currentPage + 1}}" routerLinkActive="active"> →</a></li>
+</ul> 
+
 <table>
 	<thead>
 		<tr class="first-table-cell">
@@ -10,7 +15,7 @@ test
 	</thead>
 	<tbody>
 		<tr *ngFor="let page of pages">
-			<td style="padding-right: 10px;"><a routerLink="/comic/{{page.comic_title_url}}" routerLinkActive="active">{{page.comic_title}}</a></td>
+			<td style="padding-right: 10px;"><a routerLink="/comic/{{page.comic_title_url}}/1" routerLinkActive="active">{{page.comic_title}}</a></td>
 			<td><a href="{{page.page_url}}">{{page.page_title}}</a></td>
 		</tr>
 	</tbody>
