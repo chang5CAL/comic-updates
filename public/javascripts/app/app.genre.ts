@@ -6,18 +6,25 @@ import { ComicService } from './comic.service';
 
 @Component({
   selector: 'genre',
-  templateUrl: 'javascripts/app/app.genre.html'
+  templateUrl: 'javascripts/app/app.genre.html',
+  styleUrls: [
+  	'javascripts/app/app.genre.css'
+  ]
 })
 export class GenreComponent { 
-	comic: Comic = new Comic();
-	pages: Page[];
 	comics: Comic[];
 	currentPage: number;
 	currentGenre: string;
 	numPage: number;
 	displayPages: number[];
 
+	// for displaying comic full description
+	expandCss: string[] = [];
+	expandText: string[] = [];
+	expanded: boolean[] = [];
+
 	private PAGE_RANGE: number = 5;
+
 
 	constructor(
 		private comicService: ComicService,
@@ -39,6 +46,11 @@ export class GenreComponent {
 			.then(tuple => { //Shortened Anonymous function
 				this.comics = tuple[0];
 				this.numPage = tuple[1];
+				for (let i = 0; i < this.comics.length; i++) {
+					this.expanded.push(false);
+					this.expandCss.push("comic-description-hide");
+					this.expandText.push("more>>");
+				}
 				console.log(tuple);
 				this.getDisplayPages();
 			});
@@ -87,4 +99,14 @@ export class GenreComponent {
 		}
 	}
 
+	expand(position: number): void {
+		if (this.expanded[position]) {
+			this.expandCss[position] = "comic-description-hide";
+			this.expandText[position] = "more>>";
+		} else {
+			this.expandCss[position] = "comic-description-show";
+			this.expandText[position] = "<<less";
+		}
+		this.expanded[position] = !this.expanded[position];
+	}
 }

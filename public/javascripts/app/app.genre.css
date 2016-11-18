@@ -1,0 +1,61 @@
+thead {
+	border-radius: 50px 50px 0px 0px;
+	background-color: #2C3E50;
+	color: white;
+}
+
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+td {
+	padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.image-td {
+	padding: 5px;
+	width:15%;
+	vertical-align: top;
+}
+
+.image-td > img {
+	width: 100px;
+	height: 100px;
+}
+
+.language-td {
+	padding: 5px;
+	width: 15%;
+	vertical-align: top;
+}
+
+.comic-td {
+	padding: 5px;
+	width: 70%;
+	vertical-align: top;
+}
+
+h1, h2, h3, h4 { 
+	margin-top: 0px; 
+}
+
+.comic-description-hide {
+	overflow: hidden;
+	line-height: 1em;
+	height: 3em;
+	display: inline-block;
+}
+
+.comic-description-show {
+	line-height: 1em;
+	display: inline-block;
+}
+
+.expand-text-color {
+	color: #375878;
+}

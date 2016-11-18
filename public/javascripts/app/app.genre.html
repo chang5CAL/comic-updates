@@ -1,2 +1,25 @@
-<p>Genre</p>
-<button (click)="getLatestComics();">Add</button>
+<div class="row">
+	<h4>{{currentGenre}}</h4>
+	<table>
+		<thead>
+			<tr class="first-table-cell">
+				<td ngClass="image-td"></td>
+				<td ngClass="language-td"><b>Language</b></td>
+				<td ngClass="comic-td"><b>Title</b></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let comic of comics; let i = index">
+				<td ngClass="image-td"><img src="{{comic.image}}"></td>
+				<td ngClass="language-td" style="padding-right: 10px;">{{comic.language}}</td>
+				<td ngClass="comic-td" style="padding-right: 10px;">
+					<div><a routerLink="/comic/{{comic.comic_title_url}}/1">{{comic.comic_title}}</a></div>
+					<div ngClass="comic-description-container">
+						<span ngClass="{{expandCss[i]}}" [innerHtml]="comic.description"></span>
+						<span ngClass="expand-text-color" (click)="expand(i)">{{expandText[i]}}</span>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div> 

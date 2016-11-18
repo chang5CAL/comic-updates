@@ -10,13 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var comic_1 = require('./comic');
 var comic_service_1 = require('./comic.service');
 var GenreComponent = (function () {
     function GenreComponent(comicService, route) {
         this.comicService = comicService;
         this.route = route;
-        this.comic = new comic_1.Comic();
+        // for displaying comic full description
+        this.expandCss = [];
+        this.expandText = [];
+        this.expanded = [];
         this.PAGE_RANGE = 5;
     }
     GenreComponent.prototype.ngOnInit = function () {
@@ -35,6 +37,11 @@ var GenreComponent = (function () {
             .then(function (tuple) {
             _this.comics = tuple[0];
             _this.numPage = tuple[1];
+            for (var i = 0; i < _this.comics.length; i++) {
+                _this.expanded.push(false);
+                _this.expandCss.push("comic-description-hide");
+                _this.expandText.push("more>>");
+            }
             console.log(tuple);
             _this.getDisplayPages();
         });
@@ -79,10 +86,24 @@ var GenreComponent = (function () {
             }
         }
     };
+    GenreComponent.prototype.expand = function (position) {
+        if (this.expanded[position]) {
+            this.expandCss[position] = "comic-description-hide";
+            this.expandText[position] = "more>>";
+        }
+        else {
+            this.expandCss[position] = "comic-description-show";
+            this.expandText[position] = "<<less";
+        }
+        this.expanded[position] = !this.expanded[position];
+    };
     GenreComponent = __decorate([
         core_1.Component({
             selector: 'genre',
-            templateUrl: 'javascripts/app/app.genre.html'
+            templateUrl: 'javascripts/app/app.genre.html',
+            styleUrls: [
+                'javascripts/app/app.genre.css'
+            ]
         }), 
         __metadata('design:paramtypes', [comic_service_1.ComicService, router_1.ActivatedRoute])
     ], GenreComponent);
