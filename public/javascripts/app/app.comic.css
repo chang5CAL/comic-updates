@@ -27,6 +27,11 @@ tr:nth-child(even) {
 	width: 70%;
 }
 
-h3 { 
+h4 { 
 	margin-top: 0px; 
+}
+
+.comic-top {
+	padding-left: 20px;
+	padding-bottom: 20px;
 }

@@ -1,14 +1,16 @@
 <div class="row">
-	<h3>{{comic.comic_title}}</h3>
+	<div class="comic-top">
+		<h4>{{comic.comic_title}}</h4>
+	</div>
 	<div class="col-md-4">'
 		<img src="{{comic.image}}">
-		<div><h4>Genre</h4></div>
+		<div><h5>Genre</h5></div>
 		<div><a routerLink="/genre/{{comic.genre}}">{{comic.genre}}</a></div>
-		<div><h4>Language</h4></div>
+		<div><h5>Language</h5></div>
 		<div>{{comic.language}}</div>
 	</div>
 	<div class="col-md-8">
-		<h3>Description</h3>
+		<h4>Description</h4>
 		<div [innerHtml]="comic.description"></div>
 		<table>
 			<thead>
