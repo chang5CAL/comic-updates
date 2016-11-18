@@ -78,7 +78,7 @@ router.get('/chapters/:page', function(req, res, next) {
 	Endpoint that returns all pages relevent to a comic
 */
 router.get('/chapters/:comic/:page', function(req, res, next) {
-	Models.Page.find({"comic_title_url": req.params.comic}).sort("page").exec(function(err, newPage) {
+	Models.Page.find({"comic_title_url": req.params.comic}).sort({"page": -1}).exec(function(err, newPage) {
 		var page = req.params.page;
 		if (err) return handleError(err);
 		var numPages = Math.ceil(newPage.length / COMIC_PER_PAGE);

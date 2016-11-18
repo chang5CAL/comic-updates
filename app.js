@@ -43,7 +43,8 @@ app.use('/scraper', scraper);
 
 app.all('*', (req, res, next) => {
   console.log(`[TRACE] Server 404 request: ${req.originalUrl}`);
-  if (req.originalUrl.includes('/home') || req.originalUrl.includes('/random')) {
+  if (req.originalUrl.includes('/home') || req.originalUrl.includes('/random') || 
+      req.originalUrl.includes('/comic') || req.originalUrl.includes('/genre'))  {
     console.log("called inside");
     res.status(200).sendFile(path.join(__dirname, 'views', 'index.html'));
   } else if (!req.originalUrl.includes('/scraper') && !req.originalUrl.includes('/scraper')) {

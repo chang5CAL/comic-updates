@@ -11,17 +11,22 @@ table {
 
 td {
 	padding: 5px;
-	width: 50%;
 }
 
 tr:nth-child(even) {
     background-color: #f8f8f8;
 }
 
-td .date-added {
+.date-added {
+	padding: 5px;
 	width:30%;
 }
 
-td .page-title {
+.page-title {
+	padding: 5px;
 	width: 70%;
+}
+
+h3 { 
+	margin-top: 0px; 
 }
