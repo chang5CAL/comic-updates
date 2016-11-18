@@ -38,7 +38,7 @@ var AppModule = (function () {
                         component: app_latest_1.LatestComponent
                     },
                     {
-                        path: 'genre/:',
+                        path: 'genre/:genre/:page',
                         component: app_genre_1.GenreComponent
                     },
                     {

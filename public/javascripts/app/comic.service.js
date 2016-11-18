@@ -49,7 +49,11 @@ var ComicService = (function () {
     ComicService.prototype.getGenreList = function (page, genre) {
         return this.http.get('api/genre/' + genre + '/' + this.checkPage(page))
             .toPromise()
-            .then(function (response) { return response.json(); })
+            .then(function (response) {
+            var res = response.json();
+            var list = [res.list, res.numPages];
+            return list;
+        })
             .catch(this.handleError);
     };
     /*

@@ -43,10 +43,14 @@ export class ComicService {
 	 * @param page: the page number that the user is currently on 
 	 * @param genre: the genre that the user is looking for 
 	*/
-	getGenreList(page: number, genre: string): Promise<Comic[]> {
+	getGenreList(page: number, genre: string): Promise<[Comic[], number]> {
 		return this.http.get('api/genre/' + genre + '/' + this.checkPage(page))
 			.toPromise()
-			.then(response => response.json() as Comic[])
+			.then(response => {
+				var res = response.json();
+				var list = [res.list, res.numPages];
+				return list as [Comic[], number];
+			})
 			.catch(this.handleError);
 	}
 
