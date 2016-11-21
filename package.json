@@ -4,7 +4,7 @@
   "scripts": {
     "start": "concurrently \"node ./bin/www\" \"npm run tsc:w\"",
     "tsc": "tsc",
-    "tsc:w": "tsc -w",
+    "tsc:w": "tsc -w"
   },
   "license": "ISC",
   "dependencies": {
