@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"node ./bin/www\" \"npm run tsc:w\"",
-    "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
   },
   "license": "ISC",
   "dependencies": {
@@ -49,8 +47,3 @@
     "typescript": "^2.0.3"
   }
 }
-
-concurrent
-express
-tsc
-serve-favicon
