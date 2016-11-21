@@ -160,7 +160,7 @@ router.get('/rss', function(req, res, next) {
     var query = Models.Comic.find(function(err, comics) {
     	if (err) return handleError(err);
     	for (var i = 0; i < comics.length; i++) {
-    		url = comics[i].url + 'rss/';
+    		url = comics[i].url + '/rss/';
     		checkRss(url, comics[i].last_checked, comics[i]);
     	}
     });	
@@ -171,6 +171,7 @@ router.get('/rss', function(req, res, next) {
 function checkRss(rss, lastCheck, comic) {
 	var req = request(rss);
 	var feedparser = new FeedParser();
+	var first = true;
 	req.on('response', function (res) {
 		var stream = this;
 		if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
@@ -181,24 +182,28 @@ function checkRss(rss, lastCheck, comic) {
 		var stream = this
 	    	, meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
 	    	, item
-	    	, first = false;
-
-		item = stream.read()
-		var date = new Date(item.pubdate);
-		if (lastCheck < date) {
-			// update the current list of comics
-			Models.Comic.findById(comic._id, function(err, newComic) {
-				if (err) return handleError(err);
-				newComic.last_checked = new Date();
-				newComic.save(function(err, updatedComic) {
+	    if (first) {
+	    	first = false;
+		    console.log("reading url: " + comic.comic_title);
+			item = stream.read();
+			var date = new Date(item.pubdate);
+			if (lastCheck < date) {
+				// update the current list of comics
+				Models.Comic.findById(comic._id, function(err, newComic) {
+					console.log("updating existing comic");
 					if (err) return handleError(err);
+					newComic.last_checked = new Date();
+					newComic.save(function(err, updatedComic) {
+						if (err) return handleError(err);
+					});
 				});
-			});
-			// goes through archive and add everythign in again
-			// TODO find better way, big bottle neck in runtime
-			var title_url = comic.comic_title.replace(/\s/g, "-").replace(/'/g, "");
-			addChapters(comic.archive_url, comic.comic_title, title_url, comic._id); 
-		}
+				// goes through archive and add everythign in again
+				// TODO find better way, big bottle neck in runtime
+				var title_url = comic.comic_title.replace(/\s/g, "-").replace(/'/g, "");
+				addChapters(comic.archive_url, comic.comic_title, title_url, comic._id);
+				console.log("add new pages"); 
+			}
+	    }
 	});
 }
 
