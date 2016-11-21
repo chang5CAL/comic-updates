@@ -78,7 +78,7 @@ function addProfileAndGenre(object, i) {
 		if (!err) {
 			var description = obj.description.replace("/t", "").replace("/n", "");
 			console.log(object);
-			var comic_title_url = object.comic_title[i].replace(/s/g, "-").replace(/'/g, "");
+			var comic_title_url = object.comic_title[i].replace(/\s/g, "-").replace(/'/g, "");
 			var comic = new Models.Comic({
 				//comic_id: id,
 				comic_title: object.comic_title[i],
@@ -96,6 +96,7 @@ function addProfileAndGenre(object, i) {
 				current_chapter: chapter,
 				image: object.image[i]
 			});
+
 			comic.save(function(err, profileObj) {
 
 				if (!err) {
@@ -195,7 +196,7 @@ function checkRss(rss, lastCheck, comic) {
 			});
 			// goes through archive and add everythign in again
 			// TODO find better way, big bottle neck in runtime
-			var title_url = comic.comic_title.replace(/ /g, "-").replace(/'/g, "");
+			var title_url = comic.comic_title.replace(/\s/g, "-").replace(/'/g, "");
 			addChapters(comic.archive_url, comic.comic_title, title_url, comic._id); 
 		}
 	});
