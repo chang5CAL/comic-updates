@@ -120,4 +120,10 @@ router.get('/genre/:genre/:page', function(req, res, next) {
 	}
 });
 
+router.get('/reset', function(req, res, next) {
+	pages = [];
+	genres = {};
+	res.json("success");
+});
+
 module.exports = router;
