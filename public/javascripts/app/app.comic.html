@@ -26,7 +26,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<ul class="pagination">
+		<ul class="pagination" style="float: right;">
 			<li *ngIf="currentPage != 1"><a routerLink="/comic/{{currentComic}}/{{currentPage - 1}}" routerLinkActive="active">← </a></li>
 			<li *ngFor="let displayPage of displayPages" ngClass="{{showActiveStyle(displayPage)}}">
 				<a routerLink="/comic/{{currentComic}}/{{displayPage}}">{{displayPage}}</a>

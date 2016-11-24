@@ -17,6 +17,9 @@ var app_component_1 = require('./app.component');
 var app_latest_1 = require('./app.latest');
 var app_genre_1 = require('./app.genre');
 var app_comic_1 = require('./app.comic');
+var app_privacy_1 = require('./app.privacy');
+var app_terms_1 = require('./app.terms');
+var app_contact_1 = require('./app.contact');
 var comic_service_1 = require('./comic.service');
 var AppModule = (function () {
     function AppModule() {
@@ -44,6 +47,18 @@ var AppModule = (function () {
                     {
                         path: 'comic/:comic/:page',
                         component: app_comic_1.ComicComponent
+                    },
+                    {
+                        path: 'privacy-policy',
+                        component: app_privacy_1.PrivacyComponent
+                    },
+                    {
+                        path: 'terms-of-service',
+                        component: app_terms_1.TermsComponent
+                    },
+                    {
+                        path: 'contact-us',
+                        component: app_contact_1.ContactComponent
                     }
                 ])
             ],
@@ -51,7 +66,10 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 app_latest_1.LatestComponent,
                 app_genre_1.GenreComponent,
-                app_comic_1.ComicComponent
+                app_comic_1.ComicComponent,
+                app_privacy_1.PrivacyComponent,
+                app_terms_1.TermsComponent,
+                app_contact_1.ContactComponent
             ],
             providers: [
                 comic_service_1.ComicService,

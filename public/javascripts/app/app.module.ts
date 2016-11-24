@@ -8,6 +8,10 @@ import { AppComponent }   from './app.component';
 import { LatestComponent } from './app.latest';
 import { GenreComponent } from './app.genre';
 import { ComicComponent } from './app.comic';
+import { PrivacyComponent } from './app.privacy';
+import { TermsComponent } from './app.terms';
+import { ContactComponent } from './app.contact';
+
 
 import { ComicService } from './comic.service';
 
@@ -33,6 +37,18 @@ import { ComicService } from './comic.service';
       {
         path: 'comic/:comic/:page',
         component: ComicComponent
+      },
+      {
+        path: 'privacy-policy',
+        component: PrivacyComponent
+      },
+      {
+        path: 'terms-of-service',
+        component: TermsComponent
+      },
+      {
+        path: 'contact-us',
+        component: ContactComponent
       }
   	])
   ],
@@ -40,7 +56,10 @@ import { ComicService } from './comic.service';
   	AppComponent,
   	LatestComponent,
   	GenreComponent,
-    ComicComponent
+    ComicComponent,
+    PrivacyComponent,
+    TermsComponent,
+    ContactComponent
   ],
   providers: [
   	ComicService,
