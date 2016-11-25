@@ -9,10 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+var comic_service_1 = require('./comic.service');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(comicService) {
+        this.comicService = comicService;
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.getGenreList();
+    };
+    AppComponent.prototype.getGenreList = function () {
+        var _this = this;
+        this.comicService.getGenreTypeList()
+            .then(function (list) {
+            _this.genreList = list;
+        });
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
@@ -21,7 +32,7 @@ var AppComponent = (function () {
                 'javascripts/app/app.component.css',
             ]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [comic_service_1.ComicService])
     ], AppComponent);
     return AppComponent;
 }());

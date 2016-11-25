@@ -120,6 +120,12 @@ router.get('/genre/:genre/:page', function(req, res, next) {
 	}
 });
 
+router.get('/genres', function(req, res, next) {
+	Models.Genre.distinct("genre").exec(function(err, genreList) {
+		res.json(genreList);
+	});
+});
+
 router.get('/reset', function(req, res, next) {
 	pages = [];
 	genres = {};

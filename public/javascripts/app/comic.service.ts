@@ -83,6 +83,13 @@ export class ComicService {
 			.catch(this.handleError);
 	}
 
+	getGenreTypeList(): Promise<String[]> {
+		return this.http.get('api/genres/')
+			.toPromise()
+			.then(response => response.json() as String[])
+			.catch(this.handleError);
+	}
+
 	private checkPage(page: number): number {
 		if (page == null) {
 			return 1;

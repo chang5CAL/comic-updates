@@ -27,7 +27,12 @@
 		<div class="col-md-9">
 			<router-outlet></router-outlet> 
 		</div>
-		<div class="right-sidebar col-md-3">sidebar</div>
+		<div class="right-sidebar col-md-3">
+			<h4>Genres:</h4>
+			<div *ngFor="let genre of genreList">
+				<a *ngIf="genre !== 'Erotica'" routerLink="/genre/{{genre}}/1">{{genre}}</a>
+			</div>
+		</div>
 	</div>
 </div>
 

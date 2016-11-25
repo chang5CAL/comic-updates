@@ -32,7 +32,7 @@
 }
 
 .right-sidebar {
-
+	
 }
 
 .footer {
@@ -49,4 +49,8 @@ h1 {
 	margin-top: 0px;
 	font-size: 30px;
 	color: white;
+}
+
+h4 {
+	margin-top: 0px;
 }

@@ -83,6 +83,12 @@ var ComicService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    ComicService.prototype.getGenreTypeList = function () {
+        return this.http.get('api/genres/')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     ComicService.prototype.checkPage = function (page) {
         if (page == null) {
             return 1;
